@@ -140,8 +140,10 @@
     import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
     import { getFirestore, collection, doc, setDoc, deleteDoc, updateDoc, onSnapshot, getDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
+    // 🔑 你的 API 鑰匙
     const apiKey = "AIzaSyATaUP8AcuhjlNyriRgPYrRfCrsaCqqQkU"; 
 
+    // 🔥 你的 Firebase 鑰匙
     const fbCfg = {
       apiKey: "AIzaSyB9R8B_N-Y96vcNtkIdCUsqSK5rcCcMFsQ",
       authDomain: "flash-card-8bf5c.firebaseapp.com",
@@ -173,22 +175,30 @@
     });
 
     const callGeminiAPI = async (promptText, images = [], isJson = false) => {
-      // ✨ 這裡改成 Google 最新支援的代號：gemini-1.5-flash-latest
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`;
+      // 📡 【終極解法】自動降級與切換探測雷達：只要有任何一個模型活著，就自動使用它！
+      const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-exp', 'gemini-1.5-pro', 'gemini-1.5-flash'];
       const parts = [{ text: promptText }, ...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.dataUrl.split(',')[1] } }))];
-      const payload = { contents: [{ role: "user", parts }], generationConfig: { temperature: 0.0 } };
-      
-      if (isJson) { 
-        payload.generationConfig = { ...payload.generationConfig, responseMimeType: "application/json", responseSchema: { type: "OBJECT", properties: { keypointCards: { type: "ARRAY", items: { type: "OBJECT", properties: { front: { type: "STRING" }, back: { type: "STRING" } }, required: ["front", "back"] } }, englishCards: { type: "ARRAY", items: { type: "OBJECT", properties: { front: { type: "STRING" }, back: { type: "STRING" } }, required: ["front", "back"] } } }, required: ["keypointCards", "englishCards"] } }; 
-      }
+      let lastError = "";
 
-      for (let attempt = 0; attempt < 3; attempt++) {
+      for (let i = 0; i < modelsToTry.length; i++) {
+        const modelName = modelsToTry[i];
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+        
+        const payload = { contents: [{ role: "user", parts }], generationConfig: { temperature: 0.0 } };
+        if (isJson) { 
+          payload.generationConfig = { ...payload.generationConfig, responseMimeType: "application/json", responseSchema: { type: "OBJECT", properties: { keypointCards: { type: "ARRAY", items: { type: "OBJECT", properties: { front: { type: "STRING" }, back: { type: "STRING" } }, required: ["front", "back"] } }, englishCards: { type: "ARRAY", items: { type: "OBJECT", properties: { front: { type: "STRING" }, back: { type: "STRING" } }, required: ["front", "back"] } } }, required: ["keypointCards", "englishCards"] } }; 
+        }
+
         try {
           const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          
           if (!res.ok) {
               const errBody = await res.text();
+              lastError = errBody;
+              if (res.status === 404) continue; // 如果報 404，代表這扇門沒開，無縫切換去敲下一個門！
               throw new Error(`HTTP ${res.status}: ${errBody}`); 
           }
+          
           const result = await res.json(); 
           const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
           if (!text) throw new Error("Invalid API Response");
@@ -198,12 +208,16 @@
             const cleanText = text.replace(new RegExp(marker + '(json)?\n?', 'gi'), '').trim();
             return JSON.parse(cleanText);
           }
-          return text;
+          return text; // 成功拿到字卡！馬上停止嘗試並回傳
         } catch (error) { 
-          if (attempt >= 2) throw error; 
-          await new Promise(r => setTimeout(r, 1500)); 
+          lastError = error.message;
+          // 如果是鑰匙錯誤或格式錯誤，代表不是型號問題，直接報錯
+          if (error.message.includes("HTTP 400") || error.message.includes("HTTP 403")) {
+              throw error; 
+          }
         }
       }
+      throw new Error("所有 AI 模型探測皆失敗，最後錯誤紀錄：" + lastError);
     };
 
     const generateAccountId = (u, p) => `acc_${encodeURIComponent(u||'').replace(/[^a-zA-Z0-9]/g, '')}_${Math.abs((p||'').split('').reduce((h,c)=>(h<<5)-h+c.charCodeAt(0),0)).toString(36)}`;
