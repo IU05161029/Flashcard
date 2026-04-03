@@ -140,10 +140,9 @@
     import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
     import { getFirestore, collection, doc, setDoc, deleteDoc, updateDoc, onSnapshot, getDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
-    // ✨ 這次真的有放進去了！你的 Gemini 大腦鑰匙：
+    // ✨ 你的專屬大腦鑰匙！
     const apiKey = "AIzaSyATaUP8AcuhjlNyriRgPYrRfCrsaCqqQkU"; 
 
-    // 🔥 你專屬的 Firebase 資料庫鑰匙：
     const fbCfg = {
       apiKey: "AIzaSyB9R8B_N-Y96vcNtkIdCUsqSK5rcCcMFsQ",
       authDomain: "flash-card-8bf5c.firebaseapp.com",
@@ -175,6 +174,7 @@
     });
 
     const callGeminiAPI = async (promptText, images = [], isJson = false) => {
+      // 切換回最穩定的 gemini-1.5-flash 模型
       const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
       const parts = [{ text: promptText }, ...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.dataUrl.split(',')[1] } }))];
       const payload = { contents: [{ role: "user", parts }], generationConfig: { temperature: 0.0 } };
@@ -183,10 +183,13 @@
         payload.generationConfig = { ...payload.generationConfig, responseMimeType: "application/json", responseSchema: { type: "OBJECT", properties: { keypointCards: { type: "ARRAY", items: { type: "OBJECT", properties: { front: { type: "STRING" }, back: { type: "STRING" } }, required: ["front", "back"] } }, englishCards: { type: "ARRAY", items: { type: "OBJECT", properties: { front: { type: "STRING" }, back: { type: "STRING" } }, required: ["front", "back"] } } }, required: ["keypointCards", "englishCards"] } }; 
       }
 
-      for (let attempt = 0; attempt < 5; attempt++) {
+      for (let attempt = 0; attempt < 3; attempt++) {
         try {
           const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-          if (!res.ok) throw new Error(`HTTP error`);
+          if (!res.ok) {
+              const errBody = await res.text();
+              throw new Error(`HTTP ${res.status}: ${errBody}`); // 這裡會把錯誤抓出來
+          }
           const result = await res.json(); 
           const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
           if (!text) throw new Error("Invalid API Response");
@@ -198,8 +201,8 @@
           }
           return text;
         } catch (error) { 
-          if (attempt >= 4) throw new Error(`API Fail`); 
-          await new Promise(r => setTimeout(r, [1000, 2000, 4000, 8000][attempt])); 
+          if (attempt >= 2) throw error; // 如果失敗 3 次，就把真實錯誤往外丟
+          await new Promise(r => setTimeout(r, 1500)); 
         }
       }
     };
@@ -756,7 +759,7 @@
       };
 
       const processToCards = async (imagesData, textData, customPromptStr) => {
-        const basePrompt = `【極度重要：禁止使用 LaTeX 語法】\n請分析提取重點，整理成兩套字卡(適度使用 markdown **粗體**)：\n所有的數學公式，不可以使用 LaTeX 語法(如 $x^2$)。請使用標準 HTML (如 <sup>2</sup>) 或是 Unicode 符號。\n1. 重點字卡(keypointCards)：必背公式、核心觀念。【正面必須把對應的英文單字一併列出】。背面給詳解。\n2. 英文字卡(englishCards)：收錄學術術語的英文。**若某個單字看不懂會導致整題無法解出，該解題關鍵單字也必須強制列出。** 正面英文，背面給予繁中解釋。\n${customExtractionRule.trim() ? `\n⚠️ 【指定要求】：\n「${customExtractionRule}」` : ''}\n${textData ? `\n補充文字：\n${textData}` : ''}`;
+        const basePrompt = `【極度重要：禁止使用 LaTeX 語法】\n請分析提取重點，整理成兩套字卡(適度使用 markdown **粗體**)：\n所有的數學公式，不可以使用 LaTeX 語法(如 $x^2$)。請使用標準 HTML (如 <sup>2</sup>) 或是 Unicode 符號。\n1. 重點字卡(keypointCards)：必背公式、核心觀念。【正面必須把對應的英文單字一併列出】。背面給詳解。\n2. 英文字卡(englishCards)：收錄學術術語的英文。**若某個單字看不懂會導致整題無法解出，該解題關鍵單字也必須強制列出。** 正面英文，背面給予繁中解释。\n${customExtractionRule.trim() ? `\n⚠️ 【指定要求】：\n「${customExtractionRule}」` : ''}\n${textData ? `\n補充文字：\n${textData}` : ''}`;
 
         const aiResult = await callGeminiAPI(customPromptStr || basePrompt, imagesData, true);
         const baseFields = { subject: uploadSubject.trim(), chapter: uploadChapter.trim(), createdAt: Date.now(), reviewCount: 0, interval: 0, ease: 5, lapses: 0, nextReviewDate: Date.now() };
@@ -769,7 +772,19 @@
       const startGeneration = async () => {
         if (!apiKey) return showToast("請先在程式碼第 155 行填入 API Key！");
         if (uploadMode === 'image' && !selectedImages.length) return showToast("請選擇圖片！"); if (uploadMode === 'text' && !rawTextInput.trim()) return showToast("請輸入內容！"); if (!uploadSubject.trim() || !uploadChapter.trim()) return showToast("請填寫科目章節！");
-        setIsGenerating(true); try { setGeneratedCards(await processToCards(uploadMode === 'image' ? selectedImages : [], uploadMode === 'text' ? rawTextInput : null, null)); setCurrentView('reviewGen'); } catch (e) { showToast("生成失敗"); } finally { setIsGenerating(false); }
+        setIsGenerating(true); 
+        try { 
+           // 成功的話走這邊
+           const result = await processToCards(uploadMode === 'image' ? selectedImages : [], uploadMode === 'text' ? rawTextInput : null, null);
+           setGeneratedCards(result); 
+           setCurrentView('reviewGen'); 
+        } catch (e) { 
+           // 失敗的話走這邊，並彈出視窗讓你知道原因！
+           alert("Google AI 拒絕了請求，錯誤詳情：\n" + e.message);
+           showToast("生成失敗，請看彈出視窗"); 
+        } finally { 
+           setIsGenerating(false); 
+        }
       };
       
       const appendMoreCards = async () => {
@@ -787,7 +802,13 @@
             const combinedNew = [...newKeypoints, ...newEnglish];
             if(combinedNew.length === 0) showToast("無新重點可補充");
             else { setGeneratedCards(prev => [...prev, ...combinedNew]); showToast(`成功補充 ${combinedNew.length} 張字卡！`); }
-        } catch(e) { showToast("補充字卡失敗，請重試"); } finally { setIsGeneratingMore(false); setAdditionalPrompt(''); }
+        } catch(e) { 
+            alert("補充失敗，錯誤詳情：\n" + e.message);
+            showToast("補充字卡失敗，請重試"); 
+        } finally { 
+            setIsGeneratingMore(false); 
+            setAdditionalPrompt(''); 
+        }
       };
 
       const saveGeneratedCardsToCloud = async () => {
@@ -1057,7 +1078,7 @@
                 </div>
 
                 <div className="space-y-3">
-                   <button onClick={() => startStudySession(dueCards, 'srs')} disabled={dueCards.length === 0 || isDataLoading} className="w-full py-4 bg-white text-indigo-600 rounded-xl font-bold text-lg shadow-xl active:scale-95 disabled:opacity-50 transition-all transform hover:-translate-y-1 flex items-center justify-center">
+                   <button onClick={() => startStudySession(dueCards, 'srs')} disabled={dueCards.length === 0 || isDataLoading} className="w-full py-4 bg-white text-indigo-600 rounded-xl font-black text-lg shadow-xl active:scale-95 disabled:opacity-50 transition-all transform hover:-translate-y-1 flex items-center justify-center">
                      {dueCards.length > 0 ? '🚀 記憶排程 (獲取口糧)' : '今日已餵飽 🎉'}
                    </button>
                    {dueCards.length > 0 && (
