@@ -140,10 +140,8 @@
     import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
     import { getFirestore, collection, doc, setDoc, deleteDoc, updateDoc, onSnapshot, getDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
-    // 🔑 你的 API 鑰匙
-    const apiKey = "AIzaSyATaUP8AcuhjlNyriRgPYrRfCrsaCqqQkU"; 
+    // 程式碼裡不再寫死 apiKey 了，改從本機記憶體抓取！
 
-    // 🔥 你的 Firebase 鑰匙
     const fbCfg = {
       apiKey: "AIzaSyB9R8B_N-Y96vcNtkIdCUsqSK5rcCcMFsQ",
       authDomain: "flash-card-8bf5c.firebaseapp.com",
@@ -175,8 +173,11 @@
     });
 
     const callGeminiAPI = async (promptText, images = [], isJson = false) => {
-      // 📡 【終極解法】自動降級與切換探測雷達：只要有任何一個模型活著，就自動使用它！
-      const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-2.0-flash-exp', 'gemini-1.5-pro', 'gemini-1.5-flash'];
+      const apiKey = localStorage.getItem('gemini_api_key');
+      if (!apiKey) throw new Error("請先至「設定」頁面輸入您的 Gemini API Key！");
+
+      // 自動雷達系統：一口氣嘗試所有最新的模型，保證不會再跳 404
+      const modelsToTry = ['gemini-2.5-flash', 'gemini-2.0-flash', 'gemini-1.5-flash-latest', 'gemini-1.5-flash'];
       const parts = [{ text: promptText }, ...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.dataUrl.split(',')[1] } }))];
       let lastError = "";
 
@@ -195,7 +196,7 @@
           if (!res.ok) {
               const errBody = await res.text();
               lastError = errBody;
-              if (res.status === 404) continue; // 如果報 404，代表這扇門沒開，無縫切換去敲下一個門！
+              if (res.status === 404) continue; 
               throw new Error(`HTTP ${res.status}: ${errBody}`); 
           }
           
@@ -208,16 +209,15 @@
             const cleanText = text.replace(new RegExp(marker + '(json)?\n?', 'gi'), '').trim();
             return JSON.parse(cleanText);
           }
-          return text; // 成功拿到字卡！馬上停止嘗試並回傳
+          return text; 
         } catch (error) { 
           lastError = error.message;
-          // 如果是鑰匙錯誤或格式錯誤，代表不是型號問題，直接報錯
-          if (error.message.includes("HTTP 400") || error.message.includes("HTTP 403")) {
-              throw error; 
+          if (error.message.includes("400") || error.message.includes("403") || error.message.includes("API key")) {
+              throw new Error("API 鑰匙無效或已被 Google 封鎖，請重新申請一把！"); 
           }
         }
       }
-      throw new Error("所有 AI 模型探測皆失敗，最後錯誤紀錄：" + lastError);
+      throw new Error(lastError);
     };
 
     const generateAccountId = (u, p) => `acc_${encodeURIComponent(u||'').replace(/[^a-zA-Z0-9]/g, '')}_${Math.abs((p||'').split('').reduce((h,c)=>(h<<5)-h+c.charCodeAt(0),0)).toString(36)}`;
@@ -464,6 +464,8 @@
       const [isDragging, setIsDragging] = useState(false);
       const [swipeDirection, setSwipeDirection] = useState(null);
       const startXRef = useRef(0);
+      // 本機存放的 API Key 狀態
+      const [geminiKey, setGeminiKey] = useState(localStorage.getItem('gemini_api_key') || '');
 
       const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
 
@@ -783,8 +785,12 @@
       };
 
       const startGeneration = async () => {
-        if (!apiKey) return showToast("請先在程式碼第 155 行填入 API Key！");
+        if (!geminiKey) {
+            setCurrentView('settings');
+            return showToast("請先在設定頁面填入 Gemini API Key！");
+        }
         if (uploadMode === 'image' && !selectedImages.length) return showToast("請選擇圖片！"); if (uploadMode === 'text' && !rawTextInput.trim()) return showToast("請輸入內容！"); if (!uploadSubject.trim() || !uploadChapter.trim()) return showToast("請填寫科目章節！");
+        
         setIsGenerating(true); 
         try { 
            const result = await processToCards(uploadMode === 'image' ? selectedImages : [], uploadMode === 'text' ? rawTextInput : null, null);
@@ -1405,6 +1411,15 @@
           return (
             <div className="p-4 animate-in fade-in slide-in-from-right-4 pb-24">
               <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center"><Settings className="w-6 h-6 mr-2 text-indigo-500" /> 系統與設定</h2>
+              
+              {/* ✨ 新增：本機 API 鑰匙設定區塊 */}
+              <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 relative overflow-hidden mb-6">
+                <div className="absolute top-0 left-0 w-1 h-full bg-purple-500"></div>
+                <div className="flex items-center mb-3"><Key className="w-5 h-5 mr-2 text-gray-600" /><h3 className="font-bold text-gray-800 text-base">AI 大腦鑰匙設定</h3></div>
+                <p className="text-xs text-gray-500 mb-4 leading-relaxed">為避免您的金鑰遭 GitHub 公開判定而封鎖，請將 Gemini API Key 填寫於此。金鑰僅安全儲存於您的設備本機記憶體。</p>
+                <input type="password" value={geminiKey} onChange={e => { setGeminiKey(e.target.value); localStorage.setItem('gemini_api_key', e.target.value); }} placeholder="貼上 AIzaSy... 開頭的全新鑰匙" className="w-full h-12 p-3 text-sm text-gray-800 bg-gray-50 border border-gray-300 rounded-xl font-mono outline-none focus:ring-2 focus:ring-purple-500" />
+              </div>
+
               <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 mb-6">
                 <div className="flex items-center justify-between mb-2"><h3 className="font-bold text-gray-800 flex items-center"><span className="mr-2 text-lg">💾</span> 雲端空間狀態</h3><span className="text-xs font-bold text-gray-500">{(cards || []).length} / {MAX_CARDS} 張</span></div>
                 <div className="w-full bg-gray-100 rounded-full h-3 mt-3 overflow-hidden border border-gray-200"><div className={`h-3 rounded-full transition-all duration-1000 ${storagePercent > 80 ? 'bg-red-500' : 'bg-blue-500'}`} style={{ width: `${storagePercent}%` }}></div></div>
