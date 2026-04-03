@@ -140,10 +140,9 @@
     import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
     import { getFirestore, collection, doc, setDoc, deleteDoc, updateDoc, onSnapshot, getDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
-    // 這裡請填入你的 Gemini API Key
+    // 【重要】請將你的 Gemini API Key 填入下方引號內
     const apiKey = ""; 
-    
-    // --- 已更新為你提供的真的鑰匙 ---
+
     const fbCfg = {
       apiKey: "AIzaSyB9R8B_N-Y96vcNtkIdCUsqSK5rcCcMFsQ",
       authDomain: "flash-card-8bf5c.firebaseapp.com",
@@ -153,7 +152,7 @@
       appId: "1:237699713876:web:8d8803bc0f564cd3a796c1",
       measurementId: "G-MCYTRQ8ZNM"
     };
-    
+
     const app = !getApps().length ? initializeApp(fbCfg) : getApp();
     const auth = getAuth(app);
     const db = getFirestore(app);
@@ -175,7 +174,7 @@
     });
 
     const callGeminiAPI = async (promptText, images = [], isJson = false) => {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
       const parts = [{ text: promptText }, ...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.dataUrl.split(',')[1] } }))];
       const payload = { contents: [{ role: "user", parts }], generationConfig: { temperature: 0.0 } };
       
@@ -586,7 +585,7 @@
             if(Math.random() < 0.5) { updates = { luckyClover: (stats.luckyClover || 0) + 20 }; rewardText = `獲得 🍀 幸運四葉草`; }
             else { updates = { comboBattery: (stats.comboBattery || 0) + 1 }; rewardText = `獲得 ⚡ 連擊電池`; }
         } 
-        else if (roll < 0.98) { updates = { feverCharm: (stats.feverCharm || 0) + 15 }; rewardText = `歐皇體！獲得 🔥 狂熱符咒`; }
+        else if (roll < 0.98) { updates = { feverCharm: (stats.feverCharm || 0) + 15 }; rewardText = `歐皇附體！獲得 🔥 狂熱符咒`; }
         else if (roll < 0.995) { updates = { gachaTokens: (stats.gachaTokens || 0) + 1 }; rewardText = `神話掉落！獲得 🎟️ 扭蛋券 x1`; }
         else { updates = { gachaTokens: (stats.gachaTokens || 0) + 3 }; rewardText = `💎 究極大獎！獲得 🎟️ 扭蛋券 x3！`; }
         await updateStatsData(updates); setShowChestModal(true); setChestReward(rewardText);
@@ -598,7 +597,7 @@
             if (currentPets.length === 1) return showToast("至少要保留一隻伴讀精靈喔！");
             const newPets = currentPets.filter(k => k !== petKey); await updateStatsData({ activePets: newPets }); showToast(`已收回！`);
         } else {
-            if (currentPets.length >= 3) return showToast("最多只能同時召喚 3 隻喔！");
+            if (currentPets.length >= 3) return showToast("最多同時召喚 3 隻喔！");
             const newPets = [...currentPets, petKey]; await updateStatsData({ activePets: newPets }); showToast(`成功召喚！`);
         }
       };
@@ -767,6 +766,7 @@
       };
 
       const startGeneration = async () => {
+        if (!apiKey) return showToast("請先在程式碼第 155 行填入 API Key！");
         if (uploadMode === 'image' && !selectedImages.length) return showToast("請選擇圖片！"); if (uploadMode === 'text' && !rawTextInput.trim()) return showToast("請輸入內容！"); if (!uploadSubject.trim() || !uploadChapter.trim()) return showToast("請填寫科目章節！");
         setIsGenerating(true); try { setGeneratedCards(await processToCards(uploadMode === 'image' ? selectedImages : [], uploadMode === 'text' ? rawTextInput : null, null)); setCurrentView('reviewGen'); } catch (e) { showToast("生成失敗"); } finally { setIsGenerating(false); }
       };
@@ -930,7 +930,7 @@
                   ) : (
                     <>
                        <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('left', 1); }} className="flex-1 max-w-[150px] py-4 rounded-2xl bg-red-500 text-white font-black shadow-lg shadow-red-500/30 active:scale-95 text-base sm:text-lg flex items-center justify-center"><X className="w-5 h-5 mr-1"/> 忘記</button>
-                       <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('right', 3); }} className="flex-1 max-w-[150px] py-4 rounded-2xl bg-green-500 text-white font-black shadow-lg shadow-green-500/30 active:scale-95 text-base sm:text-lg flex items-center justify-center"><Check className="w-5 h-5 mr-1"/> 記得</button>
+                       <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('right', 3); }} className="flex-1 max-w-[150px] py-4 rounded-2xl bg-green-500 text-white font-black shadow-lg shadow-red-500/30 active:scale-95 text-base sm:text-lg flex items-center justify-center"><Check className="w-5 h-5 mr-1"/> 記得</button>
                     </>
                   )
                 ) : (
