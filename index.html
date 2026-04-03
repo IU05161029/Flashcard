@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>AI 雙效字卡 | 頂大轉考特化</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    .perspective-1000{perspective:1000px}.transform-style-3d{transform-style:preserve-3d}.backface-hidden{backface-visibility:hidden}.rotate-y-180{transform:rotateY(180deg)}.pb-safe{padding-bottom:env(safe-area-inset-bottom)}.scrollbar-hide::-webkit-scrollbar{display:none}.scrollbar-hide{-ms-overflow-style:none;scrollbar-width:none}.pixelated{image-rendering:pixelated}
+    @keyframes pI{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+    @keyframes pJ{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-25px) scale(1.1)}}
+    @keyframes pA{0%{transform:translateX(0) scale(1)}15%{transform:translateX(8px) scale(1.05) rotate(5deg)}30%,85%{transform:translateX(-15px) scale(1.1) rotate(-3deg)}100%{transform:translateX(0) scale(1)}}
+    .animate-pet-idle-breathe{animation:pB 2.5s infinite ease-in-out}
+    @keyframes pB{0%,100%{transform:scaleY(1) translateY(0)}50%{transform:scaleY(.96) scaleX(1.02) translateY(2px)}}
+    .animate-pet-walk-hop{animation:pW .4s infinite ease-in-out alternate}
+    @keyframes pW{0%{transform:translateY(0) scaleY(1) rotate(-3deg)}50%{transform:translateY(-15px) scaleY(1.05) rotate(5deg)}100%{transform:translateY(0) scaleY(.95) rotate(-3deg)}}
+    @keyframes gS{0%{transform:translate(2px,2px) rotate(0deg)}10%,100%{transform:translate(-2px,-4px) rotate(-15deg)}20%,80%{transform:translate(-5px,0) rotate(15deg)}30%,90%{transform:translate(5px,4px) rotate(0deg)}40%{transform:translate(2px,-2px) rotate(15deg)}50%{transform:translate(-2px,4px) rotate(-15deg)}60%{transform:translate(-5px,2px) rotate(0deg)}70%{transform:translate(5px,2px) rotate(-15deg)}}
+    @keyframes gL{0%{transform:scale(0);opacity:0}30%{transform:scale(1.5);opacity:1}100%{transform:scale(4);opacity:0}}
+    .animate-pet-idle{animation:pI 2.5s infinite ease-in-out}
+    .animate-pet-jump{animation:pJ .4s ease-out}
+    .animate-pet-attack-recoil{animation:pA 1.8s ease-out forwards}
+    .animate-gacha-shake{animation:gS .3s infinite}
+    .animate-gacha-light{animation:gL 1.5s ease-out forwards}
+    @keyframes sp{100%{transform:rotate(360deg)}}
+    @keyframes fl{0%{opacity:.5}100%{opacity:1}}
+    @keyframes b1{0%{transform:translateY(-50%) scaleX(0) scaleY(.2);opacity:1}15%{transform:translateY(-50%) scaleX(1.2) scaleY(1.5);opacity:1}30%,80%{transform:translateY(-50%) scaleX(1) scaleY(1);opacity:1}100%{transform:translateY(-50%) scaleX(1.1) scaleY(0);opacity:0}}
+    .anim-pixel-fire{animation:b1 1.2s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    @keyframes p1{0%{transform:translateY(-50%) translateX(0) scale(.5);opacity:1}10%{transform:translateY(-50%) translateX(-20px) scale(1.5);opacity:1}100%{transform:translateY(-50%) translateX(-250px) scale(1.5);opacity:0}}
+    @keyframes t1{0%{opacity:0;transform:scaleX(0)}15%,80%{opacity:1;transform:scaleX(1.5)}100%{opacity:0;transform:scaleX(2)}}
+    .anim-proj-shuriken{animation:p1 1.2s linear forwards,sp .3s linear infinite;transform-origin:center center}
+    .shuriken-spin{animation:sp .2s linear infinite}
+    .shuriken-trail{animation:t1 1.2s ease-out forwards;transform-origin:left center}
+    @keyframes g1{0%{transform:translateY(-50%) translateX(0) scale(.2);opacity:1}10%{transform:translateY(-50%) translateX(-15px) scale(1.5);opacity:1;filter:drop-shadow(0 0 10px #7b1fa2)}100%{transform:translateY(-50%) translateX(-300px) scale(1.5);opacity:0}}
+    .anim-proj-ghost{animation:g1 1.2s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:center center}
+    .ghost-core{animation:sp .4s steps(4) infinite}
+    .ghost-trail{animation:t1 1.2s ease-out forwards;transform-origin:left center}
+    @keyframes s1{0%{transform:translateY(-50%) scale(.5) rotate(-45deg) translate(20px,20px);opacity:1}80%{transform:translateY(-50%) scale(1.5) rotate(45deg) translate(-30px,-30px);opacity:1}100%{transform:translateY(-50%) scale(2) rotate(50deg) translate(-35px,-35px);opacity:0}}
+    .anim-pixel-slash{animation:s1 .6s steps(4) forwards;transform-origin:center center}
+    @keyframes pb1{0%{transform:scaleX(0);opacity:1}10%,80%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1.2);opacity:0}}
+    @keyframes pcv{0%{transform:scaleY(.8)}100%{transform:scaleY(1.2)}}
+    @keyframes ppe{0%{transform:scale(.5) translateX(0);opacity:1;stroke-width:4px}100%{transform:scale(3) translateX(-30px);opacity:0;stroke-width:1px}}
+    @keyframes psd{0%{transform:translateX(0);opacity:1}100%{transform:translateX(-50px);opacity:0}}
+    .anim-psychic-wave{animation:pb1 1.2s cubic-bezier(.1,.8,.2,1) forwards}
+    .psy-beam-core{animation:pcv .1s infinite alternate;transform-origin:left center}
+    .psy-pulse-1{animation:ppe .6s ease-out infinite}
+    .psy-pulse-2{animation:ppe .6s ease-out .2s infinite}
+    .psy-spark-1{animation:psd 1s linear infinite}
+    .psy-spark-2{animation:psd 1s linear .3s infinite}
+    .psy-spark-3{animation:psd 1s linear .6s infinite}
+    @keyframes eq1{0%{transform:scale(.2);opacity:1}80%{transform:scale(1.5);opacity:.8}100%{transform:scale(2);opacity:0}}
+    .anim-earthquake{animation:eq1 .8s ease-out forwards;margin-top:-40px;margin-left:-40px}
+    .anim-pixel-ice{animation:b1 1.2s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    .frost-burst{animation:fl .1s infinite alternate}
+    @keyframes gl1{0%,100%{opacity:1;transform:translate(0,0)}50%{opacity:.3;transform:translate(-2px,2px)}}
+    .anim-cyber-beam{animation:b1 1.2s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    .cyber-glitch rect{animation:gl1 .15s steps(2) infinite}
+    .data-flow-1,.data-flow-2{animation:psd 1s linear infinite}
+    .anim-steel-comet{animation:p1 1.2s linear forwards,sp .3s linear infinite;transform-origin:center center}
+    .comet-spark-1,.comet-spark-2,.comet-spark-3{animation:fl .1s infinite alternate}
+    @keyframes zs1{0%{transform:translateY(-50%) scaleX(0) scaleY(.5);opacity:1}20%{transform:translateY(-50%) scaleX(1.2) scaleY(1.5);opacity:1}40%{transform:translateY(-50%) scaleX(1) scaleY(1);opacity:.2}60%{transform:translateY(-50%) scaleX(1.1) scaleY(1.2);opacity:1}100%{transform:translateY(-50%) scaleX(1.5) scaleY(0);opacity:0}}
+    @keyframes fz1{0%{opacity:0;transform:scale(.5)}100%{opacity:1;transform:scale(1.5)}}
+    .anim-electric-zap-pixel{animation:zs1 .8s steps(4) forwards;transform-origin:right center}
+    .zap-spark-1{animation:fz1 .1s infinite alternate}
+    .zap-spark-2{animation:fz1 .15s infinite alternate-reverse}
+    .zap-spark-3{animation:fz1 .2s infinite alternate}
+    .anim-psy-strike{animation:b1 1.2s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    .strike-core-1,.strike-core-2{animation:sp .4s steps(4) infinite}
+    @keyframes bh1{0%{transform:translateY(-50%) scaleX(0) scaleY(.5);opacity:1}15%{transform:translateY(-50%) scaleX(1.5) scaleY(2.5);opacity:1}30%,80%{transform:translateY(-50%) scaleX(1.5) scaleY(2);opacity:1}100%{transform:translateY(-50%) scaleX(2) scaleY(0);opacity:0}}
+    @keyframes pr1{0%{transform:scale(.5);opacity:1;stroke-width:4px}100%{transform:scale(2.5);opacity:0;stroke-width:1px}}
+    .anim-hyper-beam{animation:bh1 1.5s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    .hyper-ring-1,.hyper-ring-2{animation:pr1 .6s infinite linear;transform-origin:center center}
+    @keyframes rsb1{0%{transform:scaleY(.2);opacity:1}50%{transform:scaleY(1.2);opacity:1}100%{transform:scaleY(1);opacity:0}}
+    @keyframes ds1{0%{transform:translateY(0);opacity:1}100%{transform:translateY(-20px);opacity:0}}
+    .anim-rock-spikes{animation:rsb1 .6s steps(4) forwards}
+    .rock-debris{animation:ds1 .6s steps(4) forwards}
+    @keyframes acs1{0%{transform:translateY(-50%) translateX(0) scale(.2);opacity:0;filter:drop-shadow(0 0 0 #0288d1)}15%{transform:translateY(-50%) translateX(0) scale(.8);opacity:1;filter:drop-shadow(0 0 5px #0288d1)}30%{transform:translateY(-50%) translateX(0) scale(1.2);opacity:1;filter:drop-shadow(0 0 10px #03a9f4)}45%{transform:translateY(-50%) translateX(0) scale(1);opacity:1;filter:drop-shadow(0 0 15px #4fc3f7)}50%{transform:translateY(-50%) translateX(10px) scale(1.5);opacity:1;filter:drop-shadow(0 0 20px #81d4fa)}100%{transform:translateY(-50%) translateX(-350px) scale(2);opacity:0;filter:drop-shadow(0 0 20px #81d4fa)}}
+    @keyframes au1{0%{transform:translate(15px,15px);opacity:0}50%{transform:translate(5px,5px);opacity:1}100%{transform:translate(0,0);opacity:0}}
+    .anim-aura-sphere{animation:acs1 1.5s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    .aura-core{animation:sp .2s steps(4) infinite}
+    .aura-charge-particles rect{animation:au1 .4s steps(2) infinite;transform-origin:20px 20px}
+    .particle-2{animation-delay:.1s!important}.particle-3{animation-delay:.2s!important}.particle-4{animation-delay:.3s!important}
+    @keyframes drd1{0%{transform:translateY(-50%) translateX(0) scale(.3);opacity:0;filter:drop-shadow(0 0 0 #311b92)}15%{transform:translateY(-50%) translateX(15px) scale(.8);opacity:1;filter:drop-shadow(0 0 5px #7b1fa2)}30%{transform:translateY(-50%) translateX(15px) scale(1.2);opacity:1;filter:drop-shadow(0 0 10px #00e5ff)}40%{transform:translateY(-50%) translateX(10px) scale(1);opacity:1;filter:drop-shadow(0 0 15px #00e5ff)}100%{transform:translateY(-50%) translateX(-400px) scale(2);opacity:0;filter:drop-shadow(0 0 20px #00e5ff)}}
+    @keyframes rf1{0%{opacity:.2;transform:scaleX(.8)}100%{opacity:1;transform:scaleX(1.2)}}
+    .anim-dragon-rush-pixel{animation:drd1 1.5s cubic-bezier(.4,0,.2,1) forwards;transform-origin:left center}
+    .rush-speed-lines rect{animation:rf1 .1s infinite alternate}
+    @keyframes dps1{0%{transform:translateY(-50%) scaleX(0) scaleY(.2);opacity:1}15%{transform:translateY(-50%) scaleX(1.5) scaleY(1.2);opacity:1;filter:drop-shadow(0 0 10px #7b1fa2)}30%{transform:translateY(-50%) scaleX(1) scaleY(1);opacity:1;filter:drop-shadow(0 0 15px #4a148c)}80%{transform:translateY(-50%) scaleX(1) scaleY(1);opacity:1;filter:drop-shadow(0 0 20px #311b92)}100%{transform:translateY(-50%) scaleX(1.2) scaleY(0);opacity:0}}
+    @keyframes dre1{0%{transform:scale(.5);opacity:1;stroke-width:4px}100%{transform:scale(2.5);opacity:0;stroke-width:1px}}
+    .anim-dark-pulse-pixel{animation:dps1 1.5s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    .dark-ring-1{animation:dre1 .5s steps(3) infinite}
+    .dark-ring-2{animation:dre1 .5s steps(3) .15s infinite}
+    .dark-ring-3{animation:dre1 .5s steps(3) .3s infinite}
+    @keyframes ds11{0%{transform:translate(0,0) scale(.5);opacity:1}100%{transform:translate(-300px,-30px) scale(1.5);opacity:0}}
+    @keyframes ds12{0%{transform:translate(0,0) scale(.5);opacity:1}100%{transform:translate(-300px,30px) scale(1.5);opacity:0}}
+    .anim-dart-1{animation:ds11 1s cubic-bezier(.4,0,1,1) forwards}
+    .anim-dart-2{animation:ds12 1s cubic-bezier(.4,0,1,1) .2s forwards;opacity:0}
+    .dart-thrust{animation:fl .1s infinite alternate}
+    @keyframes ba1{0%{transform:translateY(-50%) scale(.2) rotate(-20deg) translate(20px,20px);opacity:1}80%{transform:translateY(-50%) scale(3) rotate(20deg) translate(-40px,-40px);opacity:1;filter:drop-shadow(0 0 20px #ffd700)}100%{transform:translateY(-50%) scale(4) rotate(30deg) translate(-50px,-50px);opacity:0}}
+    .anim-behemoth-blade{animation:ba1 .6s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:center center}
+    .anim-blue-flare{animation:bh1 1.5s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    .flare-flicker rect{animation:gl1 .15s steps(2) infinite}
+    .anim-bolt-strike{animation:bh1 1.5s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    .bolt-flicker path{animation:gl1 .15s steps(2) infinite}
+    .bolt-sparks rect{animation:psd 1s linear infinite}
+    @keyframes fgs1{0%{transform:translateY(-50%) scale(.2);opacity:0;filter:drop-shadow(0 0 0 #ff4081)}20%{transform:translateY(-50%) scale(1);opacity:1;filter:drop-shadow(0 0 10px #f50057)}80%{transform:translateY(-50%) scale(1.2);opacity:1;filter:drop-shadow(0 0 20px #f50057)}100%{transform:translateY(-50%) scale(2);opacity:0;filter:drop-shadow(0 0 25px #f50057)}}
+    @keyframes gp1{0%{transform:scaleY(.9) translateX(0)}100%{transform:scaleY(1.1) translateX(-5px)}}
+    @keyframes hs1{0%{transform:translate(0,0) scale(.5);opacity:1}100%{transform:translate(-100px,-50px) scale(2);opacity:0}}
+    .anim-fairy-gleam{animation:fgs1 1.2s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    .gleam-wave-1{animation:gp1 .2s infinite alternate}
+    .gleam-wave-2{animation:gp1 .15s infinite alternate-reverse}
+    .gleam-hearts g{animation:hs1 1s steps(5) forwards;transform-origin:center center}
+    @keyframes db1{0%{transform:translateY(-50%) scale(.1);opacity:0}15%{transform:translateY(-50%) scale(1.5);opacity:1}30%,80%{transform:translateY(-50%) scale(1.2);opacity:1;filter:drop-shadow(0 0 25px #4a148c)}100%{transform:translateY(-50%) scale(3);opacity:0;filter:drop-shadow(0 0 10px #000)}}
+    @keyframes dzk1{0%{transform:translate(-2px,2px)}100%{transform:translate(2px,-2px)}}
+    .anim-night-daze{animation:db1 1.2s cubic-bezier(.2,0,.1,1) forwards;transform-origin:center center}
+    .daze-wave-1{animation:dzk1 .1s infinite alternate}
+    .daze-wave-2{animation:dzk1 .15s infinite alternate-reverse}
+    .daze-wave-3{animation:dzk1 .08s infinite alternate}
+    .daze-glitch rect{animation:gl1 .15s steps(2) infinite}
+    .anim-draco-meteor{animation:bh1 1.5s cubic-bezier(.1,.8,.2,1) forwards;transform-origin:left center}
+    .draco-ring-1,.draco-ring-2{animation:pr1 .6s infinite linear;transform-origin:center center}
+    .draco-particles rect{animation:ds1 .6s steps(4) forwards}
+    .anim-mythic-cyclone{animation:db1 1.2s cubic-bezier(.2,0,.1,1) forwards;transform-origin:center center}
+    .mythic-particles rect{animation:hs1 1s steps(5) forwards;transform-origin:center center}
+    @keyframes js1{0%{transform:translateY(-50%) scale(0);opacity:0}15%{transform:translateY(-50%) scale(2);opacity:1;filter:drop-shadow(0 0 30px #fff)}30%{transform:translateY(-50%) scale(1.5);opacity:1}50%{transform:translateY(-50%) translateX(20px) scale(1.5);opacity:1}100%{transform:translateY(-50%) translateX(-400px) scale(3.5);opacity:0}}
+    .anim-judgement{animation:js1 1.8s cubic-bezier(.2,0,.1,1) forwards;transform-origin:right center}
+    .judge-cross{animation:sp 1.5s steps(8) infinite}
+    .judge-beam-array rect{animation:fl .05s infinite alternate}
+    .judge-ring{animation:pr1 .8s ease-out infinite}
+    .judge-particles rect{animation:hs1 1s ease-out infinite}
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel" data-type="module">
+    import React, { useState, useEffect, useRef } from 'https://esm.sh/react@18.2.0';
+    import { createRoot } from 'https://esm.sh/react-dom@18.2.0/client';
+    import { Folder, FileText, Plus, ChevronRight, ChevronLeft, RotateCcw, Save, Trash2, Check, X, Play, Loader2, Sparkles, Files, BookOpen, Type, Database, Zap, Calendar, User, Lock, Key, LogOut, Copy, Clipboard, Shuffle, AlertTriangle, Filter, FolderInput, MessageCircle, Volume2, Search, Settings } from 'https://esm.sh/lucide-react@0.294.0';
+    import { initializeApp, getApp, getApps } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+    import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+    import { getFirestore, collection, doc, setDoc, deleteDoc, updateDoc, onSnapshot, getDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
+
+    const apiKey = ""; 
+    let fbCfg = { projectId: 'dummy-project-id' };
+    try { if (typeof __firebase_config !== 'undefined' && __firebase_config) fbCfg = JSON.parse(__firebase_config); } catch(e) {}
+    const app = !getApps().length ? initializeApp(fbCfg) : getApp();
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+    const getLocalYYYYMMDD = (d = new Date()) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+
+    const triggerVibration = (type) => {
+      if (typeof navigator === 'undefined' || !navigator.vibrate) return;
+      try { if (type === 'success') navigator.vibrate([30, 50, 30]); else if (type === 'error') navigator.vibrate([100]); else if (type === 'tap') navigator.vibrate([15]); else if (type === 'heavy') navigator.vibrate([50, 100, 50, 100, 50]); } catch(e) {}
+    };
+
+    const compressImage = (dataUrl, maxWidth = 1600) => new Promise(res => {
+      const img = new Image(); img.onload = () => {
+        const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+        const scale = maxWidth / img.width; canvas.width = scale < 1 ? maxWidth : img.width; canvas.height = scale < 1 ? img.height * scale : img.height;
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height); res(canvas.toDataURL('image/jpeg', 0.85)); 
+      }; img.src = dataUrl;
+    });
+
+    const callGeminiAPI = async (promptText, images = [], isJson = false) => {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+      const parts = [{ text: promptText }, ...images.map(img => ({ inlineData: { mimeType: img.mimeType, data: img.dataUrl.split(',')[1] } }))];
+      const payload = { contents: [{ role: "user", parts }], generationConfig: { temperature: 0.0 } };
+      
+      if (isJson) { 
+        payload.generationConfig = { ...payload.generationConfig, responseMimeType: "application/json", responseSchema: { type: "OBJECT", properties: { keypointCards: { type: "ARRAY", items: { type: "OBJECT", properties: { front: { type: "STRING" }, back: { type: "STRING" } }, required: ["front", "back"] } }, englishCards: { type: "ARRAY", items: { type: "OBJECT", properties: { front: { type: "STRING" }, back: { type: "STRING" } }, required: ["front", "back"] } } }, required: ["keypointCards", "englishCards"] } }; 
+      }
+
+      for (let attempt = 0; attempt < 5; attempt++) {
+        try {
+          const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          if (!res.ok) throw new Error(`HTTP error`);
+          const result = await res.json(); 
+          const text = result.candidates?.[0]?.content?.parts?.[0]?.text;
+          if (!text) throw new Error("Invalid API Response");
+          
+          if (isJson) {
+            const marker = String.fromCharCode(96, 96, 96);
+            const cleanText = text.replace(new RegExp(marker + '(json)?\n?', 'gi'), '').trim();
+            return JSON.parse(cleanText);
+          }
+          return text;
+        } catch (error) { 
+          if (attempt >= 4) throw new Error(`API Fail`); 
+          await new Promise(r => setTimeout(r, [1000, 2000, 4000, 8000][attempt])); 
+        }
+      }
+    };
+
+    const generateAccountId = (u, p) => `acc_${encodeURIComponent(u||'').replace(/[^a-zA-Z0-9]/g, '')}_${Math.abs((p||'').split('').reduce((h,c)=>(h<<5)-h+c.charCodeAt(0),0)).toString(36)}`;
+
+    const formatText = (text) => { 
+      if (!text || typeof text !== 'string') return text || ''; 
+      const f = text.replace(/\*\*(.*?)\*\*/g, '<strong class="text-indigo-700">$1</strong>').replace(/\[\.\.\.\]/g, '<span class="bg-gray-200 text-transparent rounded px-4 py-0.5 mx-1 border-b-2 border-gray-400 select-none">...</span>'); 
+      return <span dangerouslySetInnerHTML={{ __html: f.replace(/\n/g, '<br/>') }} />; 
+    };
+
+    const calcNextFSRS = (q, oldInterval = 0, oldDifficulty = 5) => { 
+      let diff = oldDifficulty < 3 ? 5 : oldDifficulty; 
+      let nextD = Math.max(1, Math.min(10, diff - (q - 3)));
+      let nextI; 
+      if (oldInterval === 0 || (oldInterval === 1 && q !== 4)) nextI = q === 1 ? 0.5 : q === 2 ? 1 : q === 3 ? 3 : 5;
+      else nextI = q === 1 ? Math.max(0.5, oldInterval * 0.2) : q === 2 ? oldInterval * 1.2 : q === 3 ? oldInterval * (2.5 - (nextD * 0.1)) : oldInterval * (3.5 - (nextD * 0.1)); 
+      return { interval: parseFloat(nextI.toFixed(1)), ease: nextD }; 
+    };
+
+    const formatDays = (d) => d < 1 ? '< 1 天' : d === 1 ? '1 天' : d < 30 ? `${Math.round(d)} 天` : d < 365 ? `${(d / 30).toFixed(1)} 個月` : `${(d / 365).toFixed(1)} 年`;
+
+    const playAudio = (text, e) => {
+      if (e) e.stopPropagation();
+      if ('speechSynthesis' in window) { const u = new SpeechSynthesisUtterance(text); u.lang = 'en-US'; window.speechSynthesis.speak(u); } 
+      else alert("您的瀏覽器不支援語音播放");
+    };
+
+    const isKeypointCard = (c) => ['keypoint', 'concept', 'vocab', 'cloze'].includes(c?.cardType);
+    const isEnglishCard = (c) => c?.cardType === 'english';
+    const getPokeImg = (id) => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+    const getPokeItem = () => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png`;
+
+    const P = (xp, id, name, x=-20, y=-10) => ({ xp, img: getPokeImg(id), name, origin: { x, y } });
+    const FP = (name, secret, ...stages) => ({ name, type: 'pokemon', secret, stages });
+    const BP = (q1, q2, attack, animType) => ({ quotes: [q1, q2].filter(Boolean), attack, animType });
+
+    const PET_FAMILIES = {
+      fire: FP('火系家族', false, P(0,4,'小火龍',-16,-2), P(1500,5,'火恐龍',-24,-12), P(6000,6,'噴火龍',-32,-22)),
+      p_ninja: FP('水忍家族', true, P(0,656,'呱頭泡蛙',-12,6), P(2000,657,'呱頭蛙',-18,-2), P(8000,658,'甲賀忍蛙',-35,-5)),
+      p_u1: FP('幽燈家族', true, P(0,607,'燭光靈',-5,-5), P(2000,608,'燈火幽靈',-15,-5), P(8000,609,'水晶燈火靈',-25,-10)),
+      p_u2: FP('牙龍家族', true, P(0,610,'牙牙',-12,2), P(2000,611,'斧牙龍',-20,-5), P(8000,612,'雙斧戰龍',-35,-15)),
+      p_u9: FP('超夢家族', true, P(5000,150,'超夢',-25,-20)),
+      p_u10: FP('快龍家族', true, P(0,147,'迷你龍',-10,5), P(3000,148,'哈克龍',-15,-10), P(12000,149,'快龍',-35,-20)),
+      p_u12: FP('路卡利歐', true, P(0,447,'利歐路',-15,5), P(4500,448,'路卡利歐',-30,-8)),
+      p_u13: FP('烈咬陸鯊', true, P(0,443,'圓陸鯊',-15,5), P(3000,444,'尖牙陸鯊',-25,-5), P(12000,445,'烈咬陸鯊',-40,-15)),
+      p_u14: FP('三首惡龍', true, P(0,633,'單首龍',-10,0), P(3500,634,'雙首暴龍',-20,-10), P(15000,635,'三首惡龍',-35,-25)),
+      p_u15: FP('極速幽靈', true, P(0,885,'多龍梅西亞',-10,0), P(3000,886,'多龍奇',-20,-10), P(12000,887,'多龍巴魯托',-40,-15)),
+      p_u16: FP('蒼響家族', true, P(8000,888,'蒼響',-25,-5)),
+      p_u17: FP('萊希拉姆', true, P(8000,643,'萊希拉姆',-35,-15)),
+      p_u18: FP('捷克羅姆', true, P(8000,644,'捷克羅姆',-35,-15)),
+      p_u19: FP('仙子伊布', true, P(0,133,'伊布',-12,5), P(6000,700,'仙子伊布',-20,0)),
+      p_u20: FP('索羅亞克', true, P(0,570,'索羅亞',-12,5), P(5000,571,'索羅亞克',-25,-10)),
+      p_u21: FP('血翼家族', true, P(0,371,'寶貝龍',-15,5), P(5000,372,'甲殼龍',-20,0), P(18000,373,'暴飛龍',-35,-15)),
+      p_u22: FP('天空之神', true, P(25000,384,'烈空坐',-35,-25)),
+      p_u23: FP('創世神', true, P(40000,493,'阿爾宙斯',-30,-15)),
+    };
+
+    const PET_BEHAVIORS = {
+      fire: BP("吼嗚！燃燒吧！", "周圍的空氣都沸騰了！🔥", "噴射火焰！", 'fire-beam'),
+      p_ninja: BP("忍者的精髓在於無聲無息...", "💧", "飛水手裏劍！", 'water-shuriken'),
+      p_u1: BP("👻", "帶你走向靈界...", "暗影球！", 'ghost-ball'),
+      p_u2: BP("吼！！！🐉", "（磨牙中...）", "逆麟！", 'pixel-slash'), 
+      p_u9: BP("🔮", "人類...不過如此。", "精神擊破！", 'psy-strike'),
+      p_u10: BP("🧡", "我是準神喔！", "破壞光線！", 'hyper-beam'),
+      p_u12: BP("✨", "我能看穿你的內心！", "波導彈！", 'aura-sphere-pixel'), 
+      p_u13: BP("✈️", "誰敢向我挑戰？", "龍之俯衝！", 'dragon-rush-pixel'),
+      p_u14: BP("😈", "吼吼吼！！！", "惡之波動！", 'dark-pulse-pixel'),
+      p_u15: BP("👻", "發射！", "龍箭！", 'phantom-darts-pixel'),
+      p_u16: BP("✨", "以劍之名！", "巨獸斬！", 'behemoth-blade-pixel'),
+      p_u17: BP("🔥", "讓世界化為灰燼吧！", "交錯火焰！", 'blue-flare-pixel'),
+      p_u18: BP("⚡", "理想的境界！", "交錯閃電！", 'bolt-strike-pixel'),
+      p_u19: BP("🎀", "閃耀吧！", "魔法閃耀！", 'fairy-gleam-pixel'),
+      p_u20: BP("👀", "沉浸在幻影中吧！", "暗夜爆破！", 'night-daze-pixel'),
+      p_u21: BP("🐉", "萬物皆隕！", "隕星毀滅！", 'draco-meteor-pixel'),
+      p_u22: BP("☁️", "大氣在震動！", "畫龍點睛！", 'mythic-cyclone-pixel'),
+      p_u23: BP("✨", "萬物皆虛，唯我長存！", "制裁光礫！", 'judgement-pixel'),
+    };
+
+    const getPetStatus = (familyId, totalXp) => {
+      const family = PET_FAMILIES[familyId]; if (!family) return null;
+      let currentStage = family?.stages?.[0]; let stageIndex = 0; let nextStage = family?.stages?.length > 1 ? family.stages[1] : null;
+      for (let i = 0; i < (family?.stages?.length || 0); i++) { if (totalXp >= family.stages[i].xp) { currentStage = family.stages[i]; nextStage = family.stages[i+1] || null; stageIndex = i; } }
+      let progress = 100; if (nextStage) { progress = ((totalXp - (currentStage?.xp || 0)) / ((nextStage?.xp || 1) - (currentStage?.xp || 0))) * 100; }
+      return { familyName: family?.name, type: family?.type, currentStage, nextStage, progress: Math.min(Math.max(progress, 0), 100), stageIndex, currentXp: totalXp };
+    };
+
+    const getResetDayId = () => getLocalYYYYMMDD();
+    const NORMAL_SLICES = [ { id: 'xp_30', label: '30 XP', icon: '🍬', prob: 25 }, { id: 'xp_50', label: '50 XP', icon: '🍖', prob: 20 }, { id: 'potion_1', label: '藥水x1', icon: '🧪', prob: 15 }, { id: 'shield_1', label: '護盾x1', icon: '🛡️', prob: 15 }, { id: 'xp_100', label: '100 XP', icon: '💰', prob: 10 }, { id: 'clover_1', label: '幸運草', icon: '🍀', prob: 10 }, { id: 'battery_1', label: '電池', icon: '⚡', prob: 3 }, { id: 'ticket_1', label: '扭蛋券x1', icon: '🎟️', prob: 2 } ];
+    const SUPER_SLICES = [ { id: 'xp_300', label: '300 XP', icon: '💎', prob: 25 }, { id: 'potion_3', label: '大藥水', icon: '⚗️', prob: 20 }, { id: 'shield_3', label: '絕對防禦', icon: '🏰', prob: 15 }, { id: 'xp_500', label: '500 XP', icon: '👑', prob: 15 }, { id: 'fever_1', label: '狂熱符咒', icon: '🔥', prob: 10 }, { id: 'ticket_3', label: '扭蛋券x3', icon: '🎟️', prob: 10 }, { id: 'omni_1', label: '萬能星星', icon: '🌟', prob: 4 }, { id: 'ticket_10', label: '10連抽', icon: '🏆', prob: 1 } ];
+
+    const W = ({scale, r, l, b, t='50%', y='-50%', w=240, h=80, v="0 0 120 40", c="", f, o='right center', children}) => {
+      const st = {position:'absolute', overflow:'visible', transformOrigin:o};
+      if (l!==undefined) st.left=l; else if (r!==undefined) st.right=r; else st.right=0;
+      if (b!==undefined) st.bottom=b; else { st.top=t; st.transform=`translateY(${y})`; }
+      if (f) st.filter=f;
+      return <div style={{transform:`scale(${scale})`, transformOrigin:o}}><svg width={w} height={h} viewBox={v} style={st} className={c}>{children}</svg></div>;
+    };
+
+    const AttackEffectsMap = {
+      'fire-beam': (s) => <W scale={s} c="anim-pixel-fire"><path d="M120 20h-10v-4h-10v-4h-20v-2h-40v-2h-30v10h10v4h10v6h20v4h40v-2h20v-4h10z" fill="#b71c1c"/><path d="M110 20h-10v-2h-20v-2h-30v-2h-20v4h10v4h20v4h30v-2h20v-2h10z" fill="#e53935"/><path d="M100 20h-20v-2h-30v-1h-10v4h10v2h30v-2h20z" fill="#f57c00"/><path d="M85 20h-20v-1h-10v2h10v1h20z" fill="#fbc02d"/><path d="M60 20h-10v-1h-5v2h5v1h10z" fill="#fff"/><rect x="80" y="5" width="4" height="4" fill="#e53935"/><rect x="40" y="32" width="6" height="4" fill="#f57c00"/><rect x="20" y="8" width="4" height="4" fill="#ffeb3b"/></W>,
+      'water-shuriken': (s) => <W scale={s} w={200} v="0 0 100 40" c="anim-proj-shuriken"><g className="shuriken-trail"><rect x="40" y="16" width="60" height="8" fill="#0288d1" opacity="0.6"/><rect x="45" y="12" width="40" height="4" fill="#4fc3f7" opacity="0.8"/><rect x="45" y="24" width="40" height="4" fill="#4fc3f7" opacity="0.8"/><rect x="60" y="8" width="4" height="4" fill="#e1f5fe"/><rect x="75" y="28" width="4" height="4" fill="#81d4fa"/><rect x="90" y="20" width="4" height="4" fill="#fff"/></g><g className="shuriken-spin" style={{transformOrigin:'20px 20px'}}><path d="M18 0h4v14h14v4h-14v14h-4v-14h-14v-4h14z" fill="#01579b"/><path d="M14 4h12v32h-12z" fill="#01579b" transform="rotate(45 20 20)"/><path d="M19 2h2v16h16v2h-16v16h-2v-16h-16v-2h16z" fill="#0288d1"/><path d="M16 6h8v28h-8z" fill="#0288d1" transform="rotate(45 20 20)"/><rect x="18" y="18" width="4" height="4" fill="#fff"/><rect x="18" y="4" width="4" height="4" fill="#81d4fa"/><rect x="32" y="18" width="4" height="4" fill="#81d4fa"/><rect x="18" y="32" width="4" height="4" fill="#81d4fa"/><rect x="4" y="18" width="4" height="4" fill="#81d4fa"/></g></W>,
+      'ghost-ball': (s) => <W scale={s} w={160} v="0 0 100 40" c="anim-proj-ghost"><g className="ghost-trail"><rect x="40" y="15" width="40" height="10" fill="#4a148c" opacity="0.6"/><rect x="50" y="10" width="20" height="4" fill="#7b1fa2" opacity="0.5"/><rect x="50" y="26" width="20" height="4" fill="#7b1fa2" opacity="0.5"/><rect x="75" y="8" width="4" height="4" fill="#ab47bc"/></g><g className="ghost-core" style={{transformOrigin:'20px 20px'}}><path d="M14 8h12v24h-12z M8 14h24v12h-24z" fill="#311b92"/><path d="M16 10h8v20h-8z M10 16h20v8h-20z" fill="#6a1b9a"/><path d="M18 14h4v12h-4z M14 18h12v4h-12z" fill="#ab47bc"/><rect x="18" y="18" width="4" height="4" fill="#e1bee7"/><rect x="14" y="14" width="2" height="2" fill="#fff"/></g></W>,
+      'pixel-slash': (s) => <W scale={s} w={150} h={150} v="0 0 50 50" f="drop-shadow(0 0 6px #00e676)" c="anim-pixel-slash"><path d="M40 5h5v5h-5z M35 10h5v5h-5z M30 15h5v5h-5z M25 20h5v5h-5z M20 25h5v5h-5z M15 30h5v5h-5z M10 35h5v5h-5z" fill="#00e676"/><g transform="translate(0, -10)"><path d="M35 5h5v5h-5z M30 10h5v5h-5z M25 15h5v5h-5z M20 20h5v5h-5z M15 25h5v5h-5z M10 30h5v5h-5z" fill="#b9f6ca"/></g><g transform="translate(10, 10)"><path d="M35 5h5v5h-5z M30 10h5v5h-5z M25 15h5v5h-5z M20 20h5v5h-5z M15 25h5v5h-5z M10 30h5v5h-5z" fill="#00c853"/></g></W>,
+      'psy-strike': (s) => <W scale={s} w={180} h={120} v="0 0 90 60" f="drop-shadow(0 0 15px #9c27b0)" c="anim-psy-strike"><ellipse cx="20" cy="30" rx="20" ry="15" fill="#4a148c" className="strike-core-1"/><ellipse cx="20" cy="30" rx="12" ry="8" fill="#ce93d8" className="strike-core-2"/><ellipse cx="20" cy="30" rx="6" ry="4" fill="#fff"/><path d="M20 10A20 20 0 0 1 60 30A20 20 0 0 1 20 50" fill="none" stroke="#ab47bc" strokeWidth="4" className="strike-aura"/><path d="M20 30L90 20L90 40Z" fill="#8e24aa" opacity="0.6" className="strike-beam"/></W>,
+      'hyper-beam': (s) => <W scale={s} w={300} h={120} v="0 0 150 60" r={-10} c="anim-hyper-beam"><path d="M150 30L140 10L20 10L0 30L20 50L140 50Z" fill="#e65100"/><path d="M140 30L130 16L20 16L10 30L20 44L130 44Z" fill="#ffb74d"/><path d="M130 30L120 22L20 22L15 30L20 38L120 38Z" fill="#fff"/><ellipse cx="140" cy="30" rx="6" ry="20" fill="none" stroke="#ff9800" strokeWidth="4" className="hyper-ring-1"/><ellipse cx="120" cy="30" rx="8" ry="25" fill="none" stroke="#ffe0b2" strokeWidth="2" className="hyper-ring-2"/></W>,
+      'aura-sphere-pixel': (s) => <W scale={s} c="anim-aura-sphere"><g className="aura-trail"><rect x="40" y="16" width="40" height="2" fill="#29b6f6" opacity="0.8"/><rect x="50" y="22" width="30" height="2" fill="#0277bd" opacity="0.6"/><rect x="30" y="12" width="20" height="2" fill="#4fc3f7" opacity="0.7"/><rect x="60" y="26" width="15" height="2" fill="#81d4fa" opacity="0.5"/></g><g className="aura-core" style={{transformOrigin:'20px 20px'}}><path d="M16 6h8v2h4v4h2v8h-2v4h-4v2h-8v-2h-4v-4h-2v-8h2v-4h4z" fill="#01579b"/><path d="M18 10h4v2h2v6h-2v2h-4v-2h-2v-6h2z" fill="#03a9f4"/><rect x="18" y="14" width="4" height="4" fill="#e1f5fe"/><rect x="20" y="12" width="2" height="2" fill="#fff"/></g><g className="aura-charge-particles"><rect x="4" y="4" width="2" height="2" fill="#4fc3f7" className="particle-1"/><rect x="32" y="30" width="2" height="2" fill="#03a9f4" className="particle-2"/><rect x="28" y="6" width="2" height="2" fill="#81d4fa" className="particle-3"/><rect x="10" y="32" width="2" height="2" fill="#e1f5fe" className="particle-4"/></g></W>,
+      'dragon-rush-pixel': (s) => <W scale={s} h={100} v="0 0 120 50" r={-30} c="anim-dragon-rush-pixel"><g className="rush-speed-lines"><rect x="80" y="10" width="40" height="2" fill="#7b1fa2" opacity="0.8"/><rect x="60" y="35" width="60" height="2" fill="#311b92" opacity="0.6"/><rect x="90" y="25" width="30" height="2" fill="#ce93d8" opacity="0.9"/><rect x="50" y="15" width="50" height="2" fill="#00e5ff" opacity="0.5"/></g><g className="rush-aura"><path d="M120 5h-40v10h-30v-5h-20v10h-20v10h20v10h20v-5h30v10h40z" fill="#311b92" opacity="0.85"/><path d="M100 15h-30v-5h-15v5h-15v10h15v5h15v-5h30z" fill="#7b1fa2"/><path d="M70 20h-30v10h30z" fill="#00e5ff"/><rect x="30" y="22" width="6" height="6" fill="#fff"/></g></W>,
+      'dark-pulse-pixel': (s) => <W scale={s} h={100} v="0 0 120 50" c="anim-dark-pulse-pixel"><path d="M120 20h-20v-2h-80v14h80v-2h20z" fill="#311b92"/><path d="M100 22h-60v6h60z" fill="#000"/><g className="dark-ring-1" style={{transformOrigin:'90px 25px'}}><path d="M95 15h-10v5h-5v10h5v5h10v-5h5v-10h-5z" fill="none" stroke="#7b1fa2" strokeWidth="2"/></g><g className="dark-ring-2" style={{transformOrigin:'60px 25px'}}><path d="M65 10h-10v5h-5v5h-5v10h5v5h5v5h10v-5h5v-5h5v-10h-5v-5h-5z" fill="none" stroke="#ab47bc" strokeWidth="2"/></g><g className="dark-ring-3" style={{transformOrigin:'30px 25px'}}><path d="M35 5h-10v5h-5v5h-5v20h5v5h5v5h10v-5h5v-5h5v-20h-5v-5h-5z" fill="none" stroke="#e1bee7" strokeWidth="2"/></g></W>,
+      'phantom-darts-pixel': (s) => <div style={{transform:`scale(${s})`,transformOrigin:'right center'}}><div style={{position:'absolute',right:0,top:'50%',transform:'translateY(-50%)',width:'200px',height:'100px'}}><svg width="80" height="32" viewBox="0 0 40 16" className="anim-dart-1" style={{position:'absolute',top:'15px'}}><rect x="25" y="6" width="10" height="4" fill="#00c853" opacity="0.8" className="dart-thrust"/><path d="M30 6h-5v-2h-5v-2h-10v2h-5v2h-5v4h5v2h5v2h10v-2h5v-2h5z" fill="#00e676"/><rect x="10" y="6" width="4" height="4" fill="#fff"/><rect x="10" y="8" width="2" height="2" fill="#000"/></svg><svg width="80" height="32" viewBox="0 0 40 16" className="anim-dart-2" style={{position:'absolute',bottom:'15px'}}><rect x="25" y="6" width="10" height="4" fill="#aa00ff" opacity="0.8" className="dart-thrust"/><path d="M30 6h-5v-2h-5v-2h-10v2h-5v2h-5v4h5v2h5v2h10v-2h5v-2h5z" fill="#e040fb"/><rect x="10" y="6" width="4" height="4" fill="#fff"/><rect x="10" y="8" width="2" height="2" fill="#000"/></svg></div></div>,
+      'behemoth-blade-pixel': (s) => <W scale={s} w={300} h={300} v="0 0 100 100" r={-50} c="anim-behemoth-blade"><path d="M90 10L80 20L60 40L30 70L20 80L10 90L5 85L15 75L45 45L75 15L85 5Z" fill="#ffd700" filter="drop-shadow(0 0 8px #ffb300)"/><path d="M85 15L75 25L55 45L25 75L15 85L10 80L20 70L50 40L80 10Z" fill="#fff" filter="drop-shadow(0 0 4px #fff)"/><path d="M95 15L85 25L65 45L35 75L25 85L20 80L30 70L60 40L90 10Z" fill="#00e5ff" opacity="0.6"/></W>,
+      'blue-flare-pixel': (s) => <W scale={s} w={260} h={120} v="0 0 130 60" c="anim-blue-flare"><path d="M130 30h-20v-10h-20v-5h-40v-5h-50v40h50v-5h40v-5h20v-10z" fill="#01579b"/><path d="M120 30h-20v-8h-20v-4h-40v-2h-40v28h40v-2h40v-4h20v-8z" fill="#03a9f4"/><path d="M110 30h-20v-5h-20v-2h-40v-2h-30v18h30v-2h40v-2h20v-5z" fill="#81d4fa"/><path d="M100 30h-30v-3h-40v-1h-30v8h30v-1h40v-3z" fill="#fff"/><g className="flare-flicker"><rect x="80" y="5" width="4" height="4" fill="#81d4fa"/><rect x="50" y="45" width="6" height="6" fill="#03a9f4"/><rect x="30" y="10" width="5" height="5" fill="#e0f7fa"/><rect x="100" y="50" width="3" height="3" fill="#01579b"/></g></W>,
+      'bolt-strike-pixel': (s) => <W scale={s} w={260} h={120} v="0 0 130 60" c="anim-bolt-strike"><path d="M120 30h-20v-15h-30v-5h-40v40h40v-5h30v-15z" fill="#00bcd4" opacity="0.8"/><path d="M100 30h-20v-10h-30v20h30v-10z" fill="#29b6f6"/><path d="M80 30h-30v-5h-20v10h20v-5z" fill="#fff"/><g className="bolt-flicker"><path d="M110 20l-10-15l-10 5l-20-10l5 10l-15 5" fill="none" stroke="#ffee58" strokeWidth="2"/><path d="M110 40l-10 15l-10-5l-20 10l5-10l-15-5" fill="none" stroke="#ffeb3b" strokeWidth="2"/><path d="M70 30l-30-25l-5 10l-15-5" fill="none" stroke="#fff" strokeWidth="2"/></g><g className="bolt-sparks"><rect x="90" y="5" width="4" height="4" fill="#ffee58"/><rect x="50" y="50" width="6" height="6" fill="#00bcd4"/><rect x="30" y="10" width="5" height="5" fill="#fff"/></g></W>,
+      'fairy-gleam-pixel': (s) => <W scale={s} h={120} v="0 0 120 60" r={-20} o="left center" f="drop-shadow(0 0 10px #f50057)" c="anim-fairy-gleam"><path d="M120 25h-10v-5h-10v-5h-20v-5h-40v10h-20v10h20v10h40v-5h20v-5h10z" fill="#ff4081" className="gleam-wave-1"/><path d="M100 25h-10v-5h-20v-5h-20v10h-20v10h20v10h20v-5h20v-5h10z" fill="#f8bbd0" className="gleam-wave-2"/><path d="M80 25h-10v-5h-20v10h-20v10h20v10h20v-5h10z" fill="#fff" className="gleam-wave-3"/><g className="gleam-hearts"><g fill="#f50057" transform="translate(10, 5) scale(0.5)"><rect x="4" y="0" width="4" height="2"/><rect x="12" y="0" width="4" height="2"/><rect x="2" y="2" width="16" height="4"/><rect x="4" y="6" width="12" height="2"/><rect x="6" y="8" width="8" height="2"/><rect x="8" y="10" width="4" height="2"/></g><g fill="#ff4081" transform="translate(60, 40) scale(0.6)"><rect x="4" y="0" width="4" height="2"/><rect x="12" y="0" width="4" height="2"/><rect x="2" y="2" width="16" height="4"/><rect x="4" y="6" width="12" height="2"/><rect x="6" y="8" width="8" height="2"/><rect x="8" y="10" width="4" height="2"/></g><g fill="#fff" transform="translate(40, 10) scale(0.4)"><rect x="4" y="0" width="4" height="2"/><rect x="12" y="0" width="4" height="2"/><rect x="2" y="2" width="16" height="4"/><rect x="4" y="6" width="12" height="2"/><rect x="6" y="8" width="8" height="2"/><rect x="8" y="10" width="4" height="2"/></g></g></W>,
+      'night-daze-pixel': (s) => <W scale={s} w={260} h={120} v="0 0 130 60" r={-30} c="anim-night-daze"><path d="M130 30l-40-25v10l-60-10v15l-30-5v30l30-5v15l60-10v10z" fill="#1a0033" opacity="0.9" className="daze-wave-1"/><path d="M110 30l-30-15v5l-50-5v10l-20-5v20l20-5v10l50-5v5z" fill="#b71c1c" className="daze-wave-2"/><path d="M90 30l-20-5v-5l-40-5v10l-10 0v10l10 0v10l40-5v-5z" fill="#000" className="daze-wave-3"/><g className="daze-glitch"><rect x="20" y="10" width="10" height="10" fill="#ff1744"/><rect x="50" y="40" width="8" height="8" fill="#4a148c"/><rect x="80" y="20" width="12" height="12" fill="#000"/></g></W>,
+      'draco-meteor-pixel': (s) => <W scale={s} w={400} h={200} v="0 0 200 100" r={-50} c="anim-draco-meteor"><path d="M190 40h20v20h-20z" fill="none" stroke="#d500f9" strokeWidth="4" className="draco-ring-1"/><path d="M180 30h40v40h-40z" fill="none" stroke="#ff1744" strokeWidth="2" className="draco-ring-2"/><path d="M200 35h-20v-10h-20v-15h-30v10h-20v-15h-40v15h-30v-10h-30v20h-10v20h10v20h30v-10h40v15h20v-15h30v10h20v-15h20z" fill="#ff1744" className="draco-beam-outer"/><path d="M200 40h-25v-10h-25v-5h-40v5h-30v-10h-40v15h-20v10h20v15h40v-10h30v5h40v-5h25z" fill="#d500f9" className="draco-beam-mid"/><path d="M200 45h-30v-5h-50v5h-40v-5h-40v10h40v-5h40v5h50z" fill="#00e5ff" className="draco-beam-core"/><path d="M200 47h-80v6h80z" fill="#fff"/><g className="draco-particles"><rect x="180" y="10" width="8" height="8" fill="#ff1744" className="meteor-1"/><rect x="150" y="80" width="10" height="10" fill="#d500f9" className="meteor-2"/><rect x="120" y="20" width="6" height="6" fill="#00e5ff" className="meteor-3"/><rect x="90" y="70" width="12" height="12" fill="#fff" className="meteor-4"/></g></W>,
+      'mythic-cyclone-pixel': (s) => <W scale={s} w={400} h={200} v="0 0 200 100" r={-60} f="drop-shadow(0 0 15px #00e676)" c="anim-mythic-cyclone"><path d="M200 10h-40v10h-30v-15h-20v15h-30v20h-20v40h20v20h30v15h20v-15h30v10h40z" fill="#1b5e20" opacity="0.8" className="mythic-tear"/><path d="M200 30h-50v-10h-40v-5h-60v10h-30v5h-20v40h20v5h30v10h60v-5h40v-10h50z" fill="#00c853" className="mythic-core"/><path d="M200 40h-30v-10h-20v10h-40v-15h-20v15h-30v20h30v15h20v-15h40v10h20v-10h30z" fill="#ffd600" className="mythic-lightning"/><path d="M200 45h-60v-5h-40v-5h-50v30h50v-5h40v-5h60z" fill="#fff" className="mythic-white"/><g className="mythic-particles"><rect x="150" y="5" width="15" height="15" fill="#00e676"/><rect x="100" y="80" width="12" height="12" fill="#ffd600"/><rect x="50" y="10" width="20" height="20" fill="#1b5e20"/><rect x="10" y="60" width="10" height="10" fill="#fff"/></g></W>,
+      'judgement-pixel': (s) => <W scale={s} w={400} h={200} v="0 0 200 100" r={-60} f="drop-shadow(0 0 20px #ffeb3b)" c="anim-judgement"><g className="judge-cross" style={{transformOrigin:'150px 50px'}}><rect x="130" y="10" width="40" height="80" fill="#fff9c4" opacity="0.8"/><rect x="110" y="30" width="80" height="40" fill="#fff9c4" opacity="0.8"/><rect x="140" y="20" width="20" height="60" fill="#fff"/><rect x="120" y="40" width="60" height="20" fill="#fff"/></g><g className="judge-beam-array" style={{transformOrigin:'200px 50px'}}><rect x="-200" y="25" width="400" height="50" fill="#fbc02d" opacity="0.7"/><rect x="-250" y="35" width="450" height="30" fill="#fff59d"/><rect x="-300" y="42" width="500" height="16" fill="#fff"/></g><path d="M130 20h40v60h-40v-10h-20v-40h20z" fill="none" stroke="#fbc02d" strokeWidth="4" className="judge-ring" style={{transformOrigin:'150px 50px'}}/><g className="judge-particles"><rect x="150" y="0" width="10" height="10" fill="#fff"/><rect x="120" y="80" width="12" height="12" fill="#fbc02d"/><rect x="80" y="15" width="8" height="8" fill="#fff59d"/><rect x="40" y="70" width="15" height="15" fill="#fff"/></g></W>
+    };
+
+    const DraggablePet = ({ petKey, petInfo, currentView, initialOffset = 0 }) => {
+      const [pos, setPos] = useState({ x: 20 + initialOffset, y: typeof window !== 'undefined' ? window.innerHeight - 250 : 500 });
+      const [isDragging, setIsDragging] = useState(false);
+      const [isFacingRight, setIsFacingRight] = useState(false); 
+      const [action, setAction] = useState('idle'); 
+      const [speech, setSpeech] = useState('');
+      const dragStart = useRef({ x: 0, y: 0 });
+
+      useEffect(() => {
+        if (!petInfo) return; 
+        const handleResize = () => setPos(p => ({ x: Math.min(p.x, window.innerWidth - 120), y: Math.min(p.y, window.innerHeight - 150) }));
+        window.addEventListener('resize', handleResize); return () => window.removeEventListener('resize', handleResize);
+      }, [petInfo]);
+
+      useEffect(() => {
+        if (isDragging || !petInfo) return;
+        let timerId; let lastAttackTime = Date.now();
+        const tick = () => {
+          const now = Date.now();
+          if ((now - lastAttackTime > 8000 && Math.random() < 0.5) || now - lastAttackTime > 15000) { lastAttackTime = now; triggerAction('attack'); timerId = setTimeout(tick, 3000); return; }
+          if (Math.random() < 0.4) {
+            setAction('walk');
+            setPos(prev => {
+               const stepX = (Math.random() > 0.5 ? 1 : -1) * (30 + Math.random() * 50); const stepY = (Math.random() > 0.5 ? 1 : -1) * (10 + Math.random() * 20);
+               let newX = Math.max(10, Math.min(prev.x + stepX, window.innerWidth - 120)); let newY = Math.max(80, Math.min(prev.y + stepY, window.innerHeight - 180));
+               setIsFacingRight(newX > prev.x); return { x: newX, y: newY };
+            }); 
+            setTimeout(() => setAction(a => a === 'walk' ? 'idle' : a), 1500); 
+          } else if (Math.random() < 0.7) triggerAction('jump');
+          timerId = setTimeout(tick, 2000 + Math.random() * 2000);
+        };
+        timerId = setTimeout(tick, 3000); return () => clearTimeout(timerId);
+      }, [isDragging, petKey, petInfo?.type]);
+
+      if (!petInfo || typeof window === 'undefined') return null;
+
+      const triggerAction = (type) => {
+        setAction(type); const behavior = PET_BEHAVIORS[petKey] || { quotes: ["你好呀！"], attack: "攻擊！" };
+        if (type === 'attack') setSpeech(behavior.attack); else if (type !== 'jump' && Math.random() > 0.5) setSpeech(behavior.quotes[Math.floor(Math.random() * behavior.quotes.length)]);
+        setTimeout(() => { setAction('idle'); setTimeout(() => setSpeech(''), 1000); }, 1800);
+      };
+
+      const handlePointerDown = (e) => { e.stopPropagation(); setIsDragging(true); setAction('idle'); dragStart.current = { x: e.clientX - pos.x, y: e.clientY - pos.y }; try { e.target.setPointerCapture(e.pointerId); } catch(err) {} };
+      const handlePointerMove = (e) => { e.stopPropagation(); if (!isDragging) return; setPos({ x: e.clientX - dragStart.current.x, y: e.clientY - dragStart.current.y }); };
+      const handlePointerUp = (e) => { e.stopPropagation(); setIsDragging(false); try { e.target.releasePointerCapture(e.pointerId); } catch(err) {} triggerVibration('tap'); };
+
+      const isStudyView = currentView === 'study';
+      const imgClass = "w-28 h-28 object-contain pixelated drop-shadow-[0_15px_15px_rgba(0,0,0,0.6)]";
+      const behavior = PET_BEHAVIORS[petKey] || {};
+      const originX = petInfo.currentStage?.origin?.x || -20; const originY = petInfo.currentStage?.origin?.y || -10;
+      const isMaxStage = (petInfo.stageIndex || 0) >= ((PET_FAMILIES[petKey]?.stages?.length || 1) - 1);
+      const effectScale = isMaxStage ? 3.5 : [0.5, 1.2, 3.5][petInfo.stageIndex || 0];
+
+      return (
+        <div style={{ position: 'fixed', left: pos.x, top: pos.y, zIndex: 120 + (isDragging ? 10 : 0), touchAction: 'none', transition: isDragging ? 'none' : 'left 1.5s ease-in-out, top 1.5s ease-in-out' }} onPointerDown={handlePointerDown} onPointerMove={handlePointerMove} onPointerUp={handlePointerUp} onPointerCancel={handlePointerUp} className="flex flex-col items-center justify-center select-none">
+          {speech && (<div className="absolute -top-12 bg-white text-gray-800 text-xs font-black px-4 py-2 rounded-2xl shadow-xl border-2 border-indigo-300 whitespace-nowrap animate-in fade-in slide-in-from-bottom-2 z-50">{speech}<div className="absolute -bottom-1.5 left-1/2 transform -translate-x-1/2 w-3 h-3 bg-white border-r-2 border-b-2 border-indigo-300 rotate-45"></div></div>)}
+          <div className={`transition-transform duration-500 relative ${isFacingRight ? '-scale-x-100' : ''}`}>
+             {action === 'attack' && petInfo?.type === 'pokemon' && behavior.animType && AttackEffectsMap[behavior.animType] && (
+               <div className="absolute pointer-events-none z-50" style={{ top: `calc(50% + ${originY}px)`, left: `calc(50% + ${originX}px)` }}>{AttackEffectsMap[behavior.animType](effectScale)}</div>
+             )}
+             <img src={petInfo?.currentStage?.img} alt="pet" draggable="false" className={`${imgClass} ${action === 'idle' && !isDragging && !isStudyView ? 'animate-pet-idle-breathe' : ''} ${action === 'walk' ? 'animate-pet-walk-hop' : ''} ${action === 'jump' ? 'animate-pet-jump' : ''} ${action === 'attack' ? 'animate-pet-attack-recoil' : ''} ${isDragging ? 'scale-110 opacity-90 cursor-grabbing' : 'cursor-grab'} `} />
+          </div>
+        </div>
+      );
+    };
+
+    function App() {
+      const [user, setUser] = useState(null);
+      const [customAccount, setCustomAccount] = useState(null);
+      const [usernameInput, setUsernameInput] = useState('');
+      const [passwordInput, setPasswordInput] = useState('');
+      const [isAuthLoading, setIsAuthLoading] = useState(false);
+      const [stats, setStats] = useState({ streak: 0, lastStudyDate: '', totalStudied: 0, xp: 0, petXp: {}, unlockedPets: ['fire'], activePets: ['fire'], gachaProgress: 0, gachaTokens: 0, doubleXpSwipes: 0, comboShields: 0, luckyClover: 0, comboBattery: 0, feverCharm: 0, lastRouletteDate: '', studiedTodayIds: [], studyHistory: {} });
+      const [isDataLoading, setIsDataLoading] = useState(true);
+      const [cards, setCards] = useState([]); 
+      const [currentView, setCurrentView] = useState('today'); 
+      const [activeSubject, setActiveSubject] = useState('');
+      const [activeChapter, setActiveChapter] = useState('');
+      const [activeTab, setActiveTab] = useState('keypoint'); 
+      const [searchQuery, setSearchQuery] = useState('');
+      const [filterKeypoint, setFilterKeypoint] = useState(true);
+      const [filterEnglish, setFilterEnglish] = useState(true);
+      const [uploadMode, setUploadMode] = useState('image'); 
+      const [rawTextInput, setRawTextInput] = useState('');
+      const [customExtractionRule, setCustomExtractionRule] = useState('');
+      const [uploadSubject, setUploadSubject] = useState('');
+      const [uploadChapter, setUploadChapter] = useState('');
+      const [selectedImages, setSelectedImages] = useState([]);
+      const [isGenerating, setIsGenerating] = useState(false);
+      const [isSaving, setIsSaving] = useState(false);
+      const [generatedCards, setGeneratedCards] = useState([]);
+      const [studySessionCards, setStudySessionCards] = useState([]);
+      const [studySessionIndex, setStudySessionIndex] = useState(0);
+      const [studyMode, setStudyMode] = useState('srs'); 
+      const [reviewHistory, setReviewHistory] = useState([]); 
+      const [sessionStats, setSessionStats] = useState({ correct: 0, total: 0, sessionXp: 0 }); 
+      const [combo, setCombo] = useState(0);
+      const [floatingText, setFloatingText] = useState(null);
+      const [showChestModal, setShowChestModal] = useState(false);
+      const [chestReward, setChestReward] = useState(null); 
+      const [gachaPhase, setGachaPhase] = useState('idle'); 
+      const [gachaRewardData, setGachaRewardData] = useState(null);
+      const [showRouletteModal, setShowRouletteModal] = useState(false);
+      const [isSuperRoulette, setIsSuperRoulette] = useState(false);
+      const [activeSlices, setActiveSlices] = useState([]);
+      const [rotation, setRotation] = useState(0);
+      const [isSpinning, setIsSpinning] = useState(false);
+      const [rouletteResult, setRouletteResult] = useState(null);
+      const hasInitializedRoulette = useRef(null);
+      const [showMixModal, setShowMixModal] = useState(false);
+      const [selectedMixChapters, setSelectedMixChapters] = useState([]);
+      const [showMoveModal, setShowMoveModal] = useState(false);
+      const [chapterToMove, setChapterToMove] = useState(null);
+      const [targetFolder, setTargetFolder] = useState('');
+      const [listFlippedState, setListFlippedState] = useState({});
+      const [additionalPrompt, setAdditionalPrompt] = useState('');
+      const [isGeneratingMore, setIsGeneratingMore] = useState(false);
+      const [exportText, setExportText] = useState('');
+      const [importText, setImportText] = useState('');
+      const [showExportArea, setShowExportArea] = useState(false);
+      const [showImportArea, setShowImportArea] = useState(false);
+      const [toast, setToast] = useState(null);
+      const [isFlipped, setIsFlipped] = useState(false);
+      const [dragX, setDragX] = useState(0);
+      const [isDragging, setIsDragging] = useState(false);
+      const [swipeDirection, setSwipeDirection] = useState(null);
+      const startXRef = useRef(0);
+
+      const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(null), 3000); };
+
+      useEffect(() => {
+        const initAuthAndLocal = async () => {
+          try {
+            let savedAccStr = localStorage.getItem('flashcard_custom_account');
+            if (!savedAccStr) {
+              const autoId = 'local_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5);
+              const autoAcc = { username: '本機使用者', accountId: autoId, isAuto: true };
+              localStorage.setItem('flashcard_custom_account', JSON.stringify(autoAcc));
+              setCustomAccount(autoAcc);
+            } else { setCustomAccount(JSON.parse(savedAccStr)); }
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) { await signInWithCustomToken(auth, __initial_auth_token); } else { await signInAnonymously(auth); }
+          } catch (error) {}
+        };
+        initAuthAndLocal();
+        const unsubscribe = onAuthStateChanged(auth, setUser); return () => unsubscribe();
+      }, []);
+
+      const getCollectionRef = (uid) => customAccount ? collection(db, 'artifacts', appId, 'public', 'data', uid) : collection(db, 'artifacts', appId, 'users', uid, 'flashcards');
+      const getStatsDocRef = (uid) => customAccount ? doc(db, 'artifacts', appId, 'public', 'data', `${uid}_stats`, 'profile') : doc(db, 'artifacts', appId, 'users', uid, 'stats', 'profile');
+      const getCardDocRef = (cardId) => { const uid = customAccount ? customAccount.accountId : user?.uid; if (!uid) return null; return customAccount ? doc(db, 'artifacts', appId, 'public', 'data', uid, cardId) : doc(db, 'artifacts', appId, 'users', uid, 'flashcards', cardId); };
+
+      useEffect(() => {
+        if (!user) { setIsDataLoading(false); return; }
+        setIsDataLoading(true);
+        const uid = customAccount ? customAccount.accountId : user.uid;
+        const cardsRef = getCollectionRef(uid);
+        const statsRef = getStatsDocRef(uid);
+        const unsubCards = onSnapshot(cardsRef, (snapshot) => { setCards(snapshot.docs.map(document => ({ id: document.id, ...document.data() }))); setIsDataLoading(false); }, () => setIsDataLoading(false));
+        const unsubStats = onSnapshot(statsRef, (docSnap) => { 
+          if(docSnap.exists()) {
+            const data = docSnap.data();
+            let activePetsArray = data.activePets || []; if (activePetsArray.length === 0 && data.activePet) activePetsArray = [data.activePet]; else if (activePetsArray.length === 0) activePetsArray = ['fire'];
+            setStats({ ...data, unlockedPets: data.unlockedPets || ['fire'], activePets: activePetsArray, gachaProgress: data.gachaProgress || 0, gachaTokens: data.gachaTokens || 0, doubleXpSwipes: data.doubleXpSwipes || 0, comboShields: data.comboShields || 0, luckyClover: data.luckyClover || 0, comboBattery: data.comboBattery || 0, feverCharm: data.feverCharm || 0, lastRouletteDate: data.lastRouletteDate || '', petXp: data.petXp || {}, studiedTodayIds: data.studiedTodayIds || [], studyHistory: data.studyHistory || {} });
+          }
+        });
+        return () => { unsubCards(); unsubStats(); };
+      }, [user, customAccount]);
+
+      useEffect(() => {
+        if (!isDataLoading && user && currentView === 'today') {
+            const resetDayId = getLocalYYYYMMDD();
+            if (stats.lastRouletteDate !== resetDayId && hasInitializedRoulette.current !== resetDayId) {
+                hasInitializedRoulette.current = resetDayId;
+                const isSuper = Math.random() < 0.05; setIsSuperRoulette(isSuper);
+                const baseSlices = isSuper ? [...SUPER_SLICES] : [...NORMAL_SLICES];
+                for(let i = baseSlices.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [baseSlices[i], baseSlices[j]] = [baseSlices[j], baseSlices[i]]; }
+                const normalColors = ['#ffadad', '#ffd6a5', '#fdffb6', '#caffbf', '#9bf6ff', '#a0c4ff', '#bdb2ff', '#ffc6ff'];
+                const superColors = ['#FEE101', '#FFD000', '#FFB700', '#FFA600', '#FF8C00', '#FF7A00', '#FF5D00', '#FF4100']; 
+                baseSlices.forEach((slice, idx) => { slice.displayColor = isSuper ? superColors[idx] : normalColors[idx]; });
+                setActiveSlices(baseSlices); setRotation(0); setRouletteResult(null); setIsSpinning(false);
+                setShowRouletteModal(true); 
+            }
+        }
+      }, [isDataLoading, stats.lastRouletteDate, currentView, user]);
+
+      const updateStatsData = async (updates) => {
+        try { const uid = customAccount ? customAccount.accountId : user?.uid; if (!uid) return; await setDoc(getStatsDocRef(uid), updates, { merge: true }); } catch (e) {}
+      };
+
+      const handleUpgradePet = async (petKey, cost) => {
+        if ((stats.xp || 0) < cost) return;
+        const newPetXp = { ...(stats.petXp || {}) }; newPetXp[petKey] = (newPetXp[petKey] || 0) + cost;
+        await updateStatsData({ xp: (stats.xp || 0) - cost, petXp: newPetXp }); showToast("🎉 升級成功！"); triggerVibration('success');
+      };
+
+      const spinRoulette = async () => {
+        if (isSpinning || activeSlices.length === 0) return;
+        setIsSpinning(true); triggerVibration('heavy');
+        await updateStatsData({ lastRouletteDate: getLocalYYYYMMDD() });
+        const totalProb = activeSlices.reduce((sum, slice) => sum + slice.prob, 0);
+        let rand = Math.random() * totalProb; let targetIdx = 0;
+        for (let i = 0; i < activeSlices.length; i++) { if (rand < activeSlices[i].prob) { targetIdx = i; break; } rand -= activeSlices[i].prob; }
+        const sliceAngle = 360 / activeSlices.length; const targetCenterAngle = (targetIdx + 0.5) * sliceAngle; const extraSpins = 8;
+        const offset = (Math.random() - 0.5) * (sliceAngle * 0.7); 
+        const desiredFinalMod = (360 - targetCenterAngle + offset) % 360; const currentMod = rotation % 360;
+        let addedDegrees = desiredFinalMod - currentMod; if (addedDegrees < 0) addedDegrees += 360;
+        const nextRotation = rotation + (360 * extraSpins) + addedDegrees;
+        setRotation(nextRotation); setTimeout(() => { setRouletteResult(activeSlices[targetIdx]); setIsSpinning(false); triggerVibration('success'); }, 4500); 
+      };
+
+      const claimRouletteReward = async () => {
+        if (!rouletteResult) return;
+        let updates = { lastRouletteDate: getLocalYYYYMMDD() }; 
+        const id = rouletteResult.id;
+        if (id.startsWith('xp_')) updates.xp = (stats.xp || 0) + parseInt(id.split('_')[1]);
+        if (id.startsWith('ticket_')) updates.gachaTokens = (stats.gachaTokens || 0) + parseInt(id.split('_')[1]);
+        if (id === 'potion_1') updates.doubleXpSwipes = (stats.doubleXpSwipes || 0) + 10;
+        if (id === 'potion_3') updates.doubleXpSwipes = (stats.doubleXpSwipes || 0) + 30;
+        if (id === 'shield_1') updates.comboShields = (stats.comboShields || 0) + 1;
+        if (id === 'shield_3') updates.comboShields = (stats.comboShields || 0) + 3;
+        if (id === 'clover_1') updates.luckyClover = (stats.luckyClover || 0) + 20;
+        if (id === 'battery_1') updates.comboBattery = (stats.comboBattery || 0) + 1;
+        if (id === 'fever_1') updates.feverCharm = (stats.feverCharm || 0) + 15;
+        if (id === 'omni_1') { updates.xp = (stats.xp || 0) + 100; updates.doubleXpSwipes = (stats.doubleXpSwipes || 0) + 10; updates.comboShields = (stats.comboShields || 0) + 1; }
+        await updateStatsData(updates); setShowRouletteModal(false); showToast(`🎉 獲得 ${rouletteResult.label}！`);
+      };
+
+      const handleGachaDraw = () => {
+        if ((stats.gachaTokens || 0) < 1) return showToast("扭蛋券不足！請多背單字獲得。");
+        const roll = Math.random(); let resultType = 'xp'; let rewardValue = null;
+        const lockedPets = Object.keys(PET_FAMILIES).filter(k => !(stats.unlockedPets || ['fire']).includes(k));
+        const ultraRareKeys = ['p_u21', 'p_u22', 'p_u23'];
+        const normalPokeLocked = lockedPets.filter(k => !ultraRareKeys.includes(k));
+        const ultraRareLocked = lockedPets.filter(k => ultraRareKeys.includes(k));
+
+        if (roll > 0.98 && ultraRareLocked.length > 0) { resultType = 'pokemon'; rewardValue = ultraRareLocked[Math.floor(Math.random() * ultraRareLocked.length)]; } 
+        else if (roll > 0.80 && normalPokeLocked.length > 0) { resultType = 'pokemon'; rewardValue = normalPokeLocked[Math.floor(Math.random() * normalPokeLocked.length)]; } 
+        else if (roll > 0.80 && ultraRareLocked.length > 0) { resultType = 'pokemon'; rewardValue = ultraRareLocked[Math.floor(Math.random() * ultraRareLocked.length)]; } 
+        else if (roll > 0.98 && normalPokeLocked.length > 0) { resultType = 'pokemon'; rewardValue = normalPokeLocked[Math.floor(Math.random() * normalPokeLocked.length)]; } 
+        else { resultType = 'xp'; rewardValue = Math.floor(Math.random() * 400) + 100; }
+
+        let newUnlockedPets = [...(stats.unlockedPets || ['fire'])]; if (resultType === 'pokemon') newUnlockedPets.push(rewardValue);
+        setGachaRewardData({ type: resultType, value: rewardValue }); setGachaPhase('capsule');
+        let updates = { gachaTokens: Math.max(0, (stats.gachaTokens || 0) - 1), unlockedPets: newUnlockedPets };
+        if (resultType === 'xp') updates.xp = (stats.xp || 0) + rewardValue;
+        updateStatsData(updates);
+      };
+
+      const handleOpenCapsule = () => {
+        if (gachaPhase !== 'capsule') return; triggerVibration('heavy'); setGachaPhase('opening');
+        setTimeout(() => { triggerVibration('success'); setGachaPhase('result'); }, 1500);
+      };
+
+      const openStudyChest = async () => {
+        const roll = Math.random(); let rewardText = ""; let updates = {};
+        if (roll < 0.40) { const gain = Math.floor(Math.random() * 21) + 30; updates = { xp: (stats.xp || 0) + gain }; rewardText = `獲得 ${gain} 點可用經驗值！`; } 
+        else if (roll < 0.65) { 
+            if(Math.random() < 0.5) { updates = { doubleXpSwipes: (stats.doubleXpSwipes || 0) + 10 }; rewardText = `獲得 🧪 雙倍經驗藥水`; }
+            else { updates = { comboShields: (stats.comboShields || 0) + 1 }; rewardText = `獲得 🛡️ 免死金牌`; }
+        } 
+        else if (roll < 0.80) { const gain = Math.floor(Math.random() * 101) + 100; updates = { xp: (stats.xp || 0) + gain }; rewardText = `爆擊！獲得 ${gain} 點經驗值！`; } 
+        else if (roll < 0.93) { 
+            if(Math.random() < 0.5) { updates = { luckyClover: (stats.luckyClover || 0) + 20 }; rewardText = `獲得 🍀 幸運四葉草`; }
+            else { updates = { comboBattery: (stats.comboBattery || 0) + 1 }; rewardText = `獲得 ⚡ 連擊電池`; }
+        } 
+        else if (roll < 0.98) { updates = { feverCharm: (stats.feverCharm || 0) + 15 }; rewardText = `歐皇附體！獲得 🔥 狂熱符咒`; }
+        else if (roll < 0.995) { updates = { gachaTokens: (stats.gachaTokens || 0) + 1 }; rewardText = `神話掉落！獲得 🎟️ 扭蛋券 x1`; }
+        else { updates = { gachaTokens: (stats.gachaTokens || 0) + 3 }; rewardText = `💎 究極大獎！獲得 🎟️ 扭蛋券 x3！`; }
+        await updateStatsData(updates); setShowChestModal(true); setChestReward(rewardText);
+      };
+
+      const togglePetActive = async (petKey) => {
+        let currentPets = stats.activePets || ['fire'];
+        if (currentPets.includes(petKey)) {
+            if (currentPets.length === 1) return showToast("至少要保留一隻伴讀精靈喔！");
+            const newPets = currentPets.filter(k => k !== petKey); await updateStatsData({ activePets: newPets }); showToast(`已收回！`);
+        } else {
+            if (currentPets.length >= 3) return showToast("最多只能同時召喚 3 隻喔！");
+            const newPets = [...currentPets, petKey]; await updateStatsData({ activePets: newPets }); showToast(`成功召喚！`);
+        }
+      };
+
+      const executeMoveChapter = async () => {
+        if (!targetFolder.trim()) return showToast("請輸入資料夾名稱");
+        setIsSaving(true);
+        try {
+          const batch = writeBatch(db); const cardsToMove = cards.filter(c => c.subject === activeSubject && c.chapter === chapterToMove);
+          cardsToMove.forEach(c => { const ref = getCardDocRef(c.id); if (ref) batch.update(ref, { subject: targetFolder.trim() }); });
+          await batch.commit(); showToast("移動成功！"); setShowMoveModal(false); setTargetFolder('');
+          if (cardsToMove.length === cards.filter(c => c.subject === activeSubject).length) setCurrentView('folders'); 
+        } catch(e) { showToast("移動失敗"); } finally { setIsSaving(false); }
+      };
+
+      const handleLoginOrRegister = async () => {
+        const u = usernameInput.trim(); const p = passwordInput.trim();
+        if (!u || !p) return showToast("請輸入帳密"); if (p.length < 4) return showToast("密碼最少4字元");
+        setIsAuthLoading(true); const accId = generateAccountId(u, p); const newAccount = { username: u, accountId: accId, isAuto: false };
+        try {
+          if (customAccount && customAccount.isAuto && cards.length > 0) {
+            showToast("綁定轉移中..."); const batch = writeBatch(db);
+            cards.forEach(card => { batch.set(doc(db, 'artifacts', appId, 'public', 'data', accId, card.id), { ...card }); batch.delete(doc(db, 'artifacts', appId, 'public', 'data', customAccount.accountId, card.id)); });
+            batch.set(doc(db, 'artifacts', appId, 'public', 'data', `${accId}_stats`, 'profile'), stats); await batch.commit();
+          }
+          setCustomAccount(newAccount); localStorage.setItem('flashcard_custom_account', JSON.stringify(newAccount));
+          setUsernameInput(''); setPasswordInput(''); showToast(`歡迎回來，${u}！`); setCurrentView('today');
+        } catch (error) {} finally { setIsAuthLoading(false); }
+      };
+
+      const handleLogout = () => { setCustomAccount(null); localStorage.removeItem('flashcard_custom_account'); showToast("已登出"); window.location.reload(); };
+      
+      const handleGenerateExportText = () => { 
+        if (cards.length === 0) return showToast("無資料"); 
+        setExportText(`SYNC_${btoa(unescape(encodeURIComponent(JSON.stringify(cards))))}_END`); 
+        setShowExportArea(true); setShowImportArea(false); 
+      };
+      
+      const copyToClipboard = () => { 
+        const ta = document.createElement("textarea"); ta.value = exportText; document.body.appendChild(ta); ta.select(); 
+        try { document.execCommand('copy'); showToast("✅ 複製成功"); } catch (err) {} document.body.removeChild(ta); 
+      };
+      
+      const handleRestoreFromText = async () => {
+        const rawText = importText.trim(); if (!rawText) return; setIsSaving(true);
+        try {
+          let b64 = rawText.startsWith('SYNC_') ? rawText.substring(5, rawText.length - 4) : rawText; const importedCards = JSON.parse(decodeURIComponent(escape(atob(b64)))); const batch = writeBatch(db);
+          importedCards.forEach(card => { const ref = getCardDocRef(card.id || ('c_'+Date.now()+Math.random())); if(ref) batch.set(ref, { ...card, createdAt: card.createdAt || Date.now() }); });
+          await batch.commit(); showToast(`🎉 成功還原 ${importedCards.length} 張！`); setImportText(''); setShowImportArea(false); setCurrentView('folders');
+        } catch(error) { showToast("❌ 匯入失敗"); } finally { setIsSaving(false); }
+      };
+
+      const filterCardsForSession = (cardsToFilter) => {
+        return cardsToFilter.filter(c => { const isEng = isEnglishCard(c); const isKey = isKeypointCard(c); return (isKey && filterKeypoint) || (isEng && filterEnglish); });
+      };
+
+      const dueCards = filterCardsForSession(cards.filter(c => (c.nextReviewDate || 0) <= Date.now()));
+      const hellCards = filterCardsForSession(cards.filter(c => (c.lapses || 0) >= 3 || (c.ease || 5) > 8.0)); 
+
+      const startStudySession = (cardsToStudy, mode = 'srs') => {
+        if (!cardsToStudy || cardsToStudy.length === 0) return showToast("無卡片可複習！");
+        setStudySessionCards([...cardsToStudy].sort(() => Math.random() - 0.5)); 
+        setStudySessionIndex(0); setStudyMode(mode); setReviewHistory([]); 
+        setSessionStats({ correct: 0, total: 0, sessionXp: 0 }); setCombo(0); setListFlippedState({}); setCurrentView('study');
+      };
+
+      const toggleMixChapter = (chapterIdStr) => setSelectedMixChapters(prev => prev.includes(chapterIdStr) ? prev.filter(id => id !== chapterIdStr) : [...prev, chapterIdStr]);
+
+      const startMixedReview = (mode) => {
+        let mixCards = cards.filter(c => selectedMixChapters.includes(`${c.subject}::${c.chapter}`));
+        if(mixCards.length === 0) return showToast("請選擇範圍"); 
+        const filteredMix = filterCardsForSession(mixCards);
+        if(filteredMix.length === 0) return showToast("無卡片！"); 
+        setShowMixModal(false); startStudySession(filteredMix, mode);
+      };
+
+      const onPointerDown = (e) => { setIsDragging(true); startXRef.current = e.clientX; try { e.target.setPointerCapture(e.pointerId); } catch(err){} };
+      const onPointerMove = (e) => { if (isDragging) setDragX(e.clientX - startXRef.current); };
+      const onPointerUp = (e) => {
+        if (!isDragging) return; setIsDragging(false); try { e.target.releasePointerCapture(e.pointerId); } catch(err){}
+        if (dragX > 60) triggerSwipeAnimation('right'); else if (dragX < -60) triggerSwipeAnimation('left'); else if (Math.abs(dragX) < 15) { setIsFlipped(!isFlipped); triggerVibration('tap'); }
+        setDragX(0);
+      };
+
+      const triggerSwipeAnimation = (direction, explicitQuality = null) => { setSwipeDirection(direction); const quality = explicitQuality !== null ? explicitQuality : (direction === 'right' ? 3 : 1); handleSwipeAction(quality); setTimeout(() => { setSwipeDirection(null); setIsFlipped(false); }, 300);  };
+      const showFloatingText = (text, type) => { setFloatingText({ text, type, id: Date.now() }); setTimeout(() => setFloatingText(null), 1000); };
+
+      const handleSwipeAction = async (quality) => {
+        const card = studySessionCards[studySessionIndex]; if (!card) return;
+        let earnedXp = 0; const isCorrect = quality >= 3; let currentCombo = combo; let actionUpdates = {};
+
+        if (isCorrect) { 
+          triggerVibration('success'); 
+          if (currentCombo === 0 && stats.comboBattery > 0) { currentCombo = 5; actionUpdates.comboBattery = stats.comboBattery - 1; showFloatingText("⚡ 電池發動！5連擊起步", 'success'); } 
+          else { currentCombo += 1; }
+          setCombo(currentCombo);
+          let baseXP = 5 + (currentCombo * 2); 
+          if (stats.feverCharm > 0) { baseXP *= 3; actionUpdates.feverCharm = stats.feverCharm - 1; } 
+          else if (stats.doubleXpSwipes > 0) { baseXP *= 2; actionUpdates.doubleXpSwipes = stats.doubleXpSwipes - 1; }
+          earnedXp = baseXP; 
+          showFloatingText(`+${earnedXp} XP 🍖 ${currentCombo >= 3 ? currentCombo+'連擊!' : ''}`, 'success');
+          setSessionStats(p => ({...p, correct: p.correct + 1, total: p.total + 1, sessionXp: p.sessionXp + earnedXp})); 
+        } else { 
+          triggerVibration('error'); 
+          if (stats.comboShields > 0 && currentCombo >= 3) { actionUpdates.comboShields = stats.comboShields - 1; showFloatingText("🛡️ 護盾保留", 'success'); } 
+          else { currentCombo = 0; setCombo(0); showFloatingText("中斷 💔", 'error'); }
+          setSessionStats(p => ({...p, total: p.total + 1})); 
+        }
+
+        setReviewHistory(prev => [...prev, { cardId: card.id, sessionIndex: studySessionIndex, oldCombo: combo, oldData: { reviewCount: card.reviewCount||0, interval: card.interval||1, ease: card.ease||5, lapses: card.lapses||0, nextReviewDate: card.nextReviewDate||Date.now() } }]);
+
+        setIsFlipped(false); setStudySessionIndex(prev => prev + 1);
+
+        try {
+          let currentClover = stats.luckyClover; if (currentClover > 0) actionUpdates.luckyClover = currentClover - 1;
+          const chestProb = currentClover > 0 ? (0.08 + Math.random() * 0.07) : 0.05;
+          const todayStr = getLocalYYYYMMDD();
+
+          if (studyMode === 'srs') {
+            const fsrs = calcNextFSRS(quality, card.interval || 0, card.ease || 5);
+            const newLapses = !isCorrect ? (card.lapses || 0) + 1 : card.lapses || 0;
+            const nextDate = Date.now() + (fsrs.interval * 24 * 60 * 60 * 1000);
+            const ref = getCardDocRef(card.id); 
+            if (ref) updateDoc(ref, { reviewCount: (card.reviewCount||0)+1, interval: fsrs.interval, ease: fsrs.ease, lapses: newLapses, nextReviewDate: nextDate }); 
+            
+            let isNewDay = stats.lastStudyDate !== todayStr;
+            let newStreak = isNewDay ? (stats.streak || 0) + 1 : (stats.streak || 0);
+            let currentStudiedIds = isNewDay ? [] : (stats.studiedTodayIds || []);
+            let newProgress = stats.gachaProgress || 0;
+            let newTokens = stats.gachaTokens || 0;
+
+            if (!currentStudiedIds.includes(card.id)) {
+                currentStudiedIds.push(card.id);
+                newProgress += 1;
+                if (newProgress >= 50) { newProgress = 0; newTokens += 1; setTimeout(() => showToast("🎟️ 達成 50 題！獲得一張扭蛋券！"), 500); }
+            }
+            
+            actionUpdates.studyHistory = { ...(stats.studyHistory || {}) }; actionUpdates.studyHistory[todayStr] = (actionUpdates.studyHistory[todayStr] || 0) + 1;
+            let finalUpdates = { streak: newStreak, lastStudyDate: todayStr, totalStudied: (stats.totalStudied || 0) + 1, gachaProgress: newProgress, gachaTokens: newTokens, studiedTodayIds: currentStudiedIds, ...actionUpdates };
+            if (earnedXp > 0) finalUpdates.xp = (stats.xp || 0) + earnedXp;
+            updateStatsData(finalUpdates);
+          } else {
+            if (earnedXp > 0) actionUpdates.xp = (stats.xp || 0) + earnedXp;
+            actionUpdates.studyHistory = { ...(stats.studyHistory || {}) }; actionUpdates.studyHistory[todayStr] = (actionUpdates.studyHistory[todayStr] || 0) + 1;
+            if(Object.keys(actionUpdates).length > 0) updateStatsData(actionUpdates);
+          }
+          if (Math.random() < chestProb && !chestReward) { setTimeout(() => openStudyChest(), 600); } 
+        } catch(e) {}
+      };
+
+      const handleUndo = async () => {
+        if (reviewHistory.length === 0) return; const last = reviewHistory[reviewHistory.length - 1];
+        if (studyMode === 'srs') { try { const ref = getCardDocRef(last.cardId); if (ref) await updateDoc(ref, last.oldData); } catch(e) {} }
+        setReviewHistory(p => p.slice(0, -1)); setStudySessionIndex(last.sessionIndex); setCombo(last.oldCombo); setIsFlipped(false); showToast("⏪ 已撤銷");
+      };
+
+      const processToCards = async (imagesData, textData, customPromptStr) => {
+        const basePrompt = `【極度重要：禁止使用 LaTeX 語法】\n請分析提取重點，整理成兩套字卡(適度使用 markdown **粗體**)：\n所有的數學公式，不可以使用 LaTeX 語法(如 $x^2$)。請使用標準 HTML (如 <sup>2</sup>) 或是 Unicode 符號。\n1. 重點字卡(keypointCards)：必背公式、核心觀念。【正面必須把對應的英文單字一併列出】。背面給詳解。\n2. 英文字卡(englishCards)：收錄學術術語的英文。**若某個單字看不懂會導致整題無法解出，該解題關鍵單字也必須強制列出。** 正面英文，背面給予繁中解釋。\n${customExtractionRule.trim() ? `\n⚠️ 【指定要求】：\n「${customExtractionRule}」` : ''}\n${textData ? `\n補充文字：\n${textData}` : ''}`;
+
+        const aiResult = await callGeminiAPI(customPromptStr || basePrompt, imagesData, true);
+        const baseFields = { subject: uploadSubject.trim(), chapter: uploadChapter.trim(), createdAt: Date.now(), reviewCount: 0, interval: 0, ease: 5, lapses: 0, nextReviewDate: Date.now() };
+        
+        const keypoints = (aiResult.keypointCards || []).map(c => ({ ...c, ...baseFields, cardType: 'keypoint', id: 'k_' + Date.now() + Math.random().toString(36).substr(2, 5) }));
+        const english = (aiResult.englishCards || []).map(c => ({ ...c, ...baseFields, cardType: 'english', id: 'e_' + Date.now() + Math.random().toString(36).substr(2, 5) }));
+        return [...keypoints, ...english];
+      };
+
+      const startGeneration = async () => {
+        if (uploadMode === 'image' && !selectedImages.length) return showToast("請選擇圖片！"); if (uploadMode === 'text' && !rawTextInput.trim()) return showToast("請輸入內容！"); if (!uploadSubject.trim() || !uploadChapter.trim()) return showToast("請填寫科目章節！");
+        setIsGenerating(true); try { setGeneratedCards(await processToCards(uploadMode === 'image' ? selectedImages : [], uploadMode === 'text' ? rawTextInput : null, null)); setCurrentView('reviewGen'); } catch (e) { showToast("生成失敗"); } finally { setIsGenerating(false); }
+      };
+      
+      const appendMoreCards = async () => {
+        if(!additionalPrompt.trim()) return showToast("請輸入您想補充的內容！");
+        setIsGeneratingMore(true);
+        try {
+            const existingFronts = generatedCards.map(c => c.front).join('、');
+            const prompt = `【嚴禁 LaTeX】請保持絕對客觀與穩定的萃取標準，依據補充指示製作**原本漏掉的**字卡。\n【指示】：「${additionalPrompt}」\n【已有的(勿重複)】：${existingFronts}\n專有名詞與解題關鍵字附帶解釋。僅輸出新增字卡。\n${rawTextInput ? `\n原本補充文字：\n${rawTextInput}` : ''}`;
+            const aiResult = await callGeminiAPI(prompt, uploadMode === 'image' ? selectedImages : [], true);
+            const baseFields = { subject: uploadSubject.trim(), chapter: uploadChapter.trim(), createdAt: Date.now(), reviewCount: 0, interval: 0, ease: 5, lapses: 0, nextReviewDate: Date.now() };
+            
+            const newKeypoints = (aiResult.keypointCards || []).map(c => ({ ...c, ...baseFields, cardType: 'keypoint', id: 'k_' + Date.now() + Math.random().toString(36).substr(2, 5) }));
+            const newEnglish = (aiResult.englishCards || []).map(c => ({ ...c, ...baseFields, cardType: 'english', id: 'e_' + Date.now() + Math.random().toString(36).substr(2, 5) }));
+            
+            const combinedNew = [...newKeypoints, ...newEnglish];
+            if(combinedNew.length === 0) showToast("無新重點可補充");
+            else { setGeneratedCards(prev => [...prev, ...combinedNew]); showToast(`成功補充 ${combinedNew.length} 張字卡！`); }
+        } catch(e) { showToast("補充字卡失敗，請重試"); } finally { setIsGeneratingMore(false); setAdditionalPrompt(''); }
+      };
+
+      const saveGeneratedCardsToCloud = async () => {
+        setIsSaving(true); 
+        try { 
+           const batch = writeBatch(db);
+           generatedCards.forEach(c => { const ref = getCardDocRef(c.id); if(ref) batch.set(ref, c); }); 
+           await batch.commit();
+           setGeneratedCards([]); setSelectedImages([]); setRawTextInput(''); setCustomExtractionRule(''); showToast("已儲存！"); 
+           setCurrentView('folders'); 
+        } catch (e) { showToast(`儲存失敗: ${e.message}`); } finally { setIsSaving(false); }
+      };
+      
+      const updateGeneratedCard = (id, field, value) => setGeneratedCards(prev => prev.map(c => c.id === id ? { ...c, [field]: value } : c));
+      const removeGeneratedCard = (id) => setGeneratedCards(prev => prev.filter(c => c.id !== id));
+      const deleteCardFromCloud = async (cardId) => { try { const ref = getCardDocRef(cardId); if (ref) await deleteDoc(ref); } catch (e) {} };
+
+      const renderMainContent = () => {
+        if (currentView === 'study') {
+          if (studyMode === 'list') {
+            const toggleAllListFlips = () => { const allFlipped = studySessionCards.every((_, i) => listFlippedState[i]); const newState = {}; if (!allFlipped) studySessionCards.forEach((_, i) => newState[i] = true); setListFlippedState(newState); };
+            return (
+              <div className="flex flex-col h-full bg-gray-50 pb-24 overflow-hidden relative select-none">
+                <div className="flex justify-between items-center p-4 bg-white shadow-sm z-20 border-b border-gray-100">
+                  <button onClick={() => setCurrentView('today')} className="p-2 bg-gray-100 rounded-full text-gray-600 active:scale-95"><ChevronLeft className="w-5 h-5"/></button>
+                  <div className="flex flex-col items-center"><h2 className="font-bold text-lg text-gray-800">清單速讀</h2><span className="text-[10px] text-gray-500 font-bold">{studySessionCards.length} 張字卡</span></div>
+                  <div className="flex space-x-2">
+                     <button onClick={toggleAllListFlips} className="p-2 bg-indigo-50 text-indigo-600 rounded-full active:scale-95" title="全部翻面"><RotateCcw className="w-4 h-4"/></button>
+                     <button onClick={() => { const earnedXP = studySessionCards.length * 2; updateStatsData({ xp: (stats.xp || 0) + earnedXP }); showToast(`速讀完成！獲得 ${earnedXP} XP`); setCurrentView('today'); }} className="px-4 py-2 bg-indigo-600 text-white font-bold rounded-xl text-sm active:scale-95 shadow-md">完成</button>
+                  </div>
+                </div>
+                <div className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-hide">
+                   <div className="text-center text-xs text-gray-400 mb-2 font-bold flex justify-center items-center"><ChevronLeft className="w-4 h-4 -rotate-90 opacity-50"/> 向下滾動瀏覽，點擊卡片看解答</div>
+                   {studySessionCards.map((card, idx) => {
+                      const isFlipped = listFlippedState[idx];
+                      const labelType = isEnglishCard(card) ? '🔤 英文' : '🎯 重點';
+                      return (
+                        <div key={card.id || idx} className="bg-white rounded-2xl shadow-sm border border-gray-200 p-5 transition-all active:scale-[0.98] cursor-pointer relative overflow-hidden group" onClick={() => setListFlippedState(p => ({...p, [idx]: !p[idx]}))}>
+                           <div className="flex justify-between items-center mb-3">
+                              <span className={`text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider ${isEnglishCard(card) ? 'text-green-500 bg-green-50' : 'text-blue-500 bg-blue-50'}`}>{labelType}</span>
+                              <span className="text-[10px] text-gray-400 bg-gray-50 px-2 py-1 rounded-full flex items-center shadow-inner"><RotateCcw className="w-3 h-3 mr-1"/> 點擊翻面</span>
+                           </div>
+                           <div className="flex justify-between items-start">
+                              <div className={`transition-all duration-300 ${isFlipped ? 'text-sm text-gray-500' : 'text-lg font-bold text-gray-800 leading-relaxed'}`}>{formatText(card.front)}</div>
+                              {isEnglishCard(card) && !isFlipped && (
+                                 <button onPointerDown={e=>e.stopPropagation()} onClick={e=>playAudio(card.front, e)} className="p-2 ml-2 bg-blue-50 text-blue-500 rounded-full active:scale-95"><Volume2 className="w-4 h-4"/></button>
+                              )}
+                           </div>
+                           {isFlipped && (
+                              <div className="mt-4 pt-4 border-t border-gray-100 animate-in fade-in slide-in-from-top-2">
+                                 <div className="text-base font-bold text-indigo-900 mb-3 leading-relaxed">{formatText(card.back)}</div>
+                              </div>
+                           )}
+                        </div>
+                      )
+                   })}
+                   <div className="h-20"></div>
+                </div>
+              </div>
+            );
+          }
+      
+          if (studySessionIndex >= studySessionCards.length) {
+            return (
+              <div className="p-6 flex flex-col items-center justify-center h-full animate-in fade-in zoom-in pb-24">
+                <div className="text-6xl mb-4">🎉</div><h2 className="text-2xl font-black text-gray-800 mb-2">複習完成！</h2>
+                <p className="text-gray-500 mb-6 font-bold text-center">獲得 {sessionStats.sessionXp} XP<br/>答對 {sessionStats.correct} / {sessionStats.total} 題</p>
+                <button onClick={() => setCurrentView('today')} className="w-full max-w-xs py-4 bg-indigo-600 text-white rounded-xl font-bold shadow-xl active:scale-95">返回首頁</button>
+              </div>
+            );
+          }
+      
+          const card = studySessionCards[studySessionIndex];
+          let transformStyle = '';
+          if (isDragging) transformStyle = `translateX(${dragX}px) rotate(${dragX * 0.05}deg)`; else if (swipeDirection === 'left') transformStyle = `translateX(-150vw) rotate(-30deg)`; else if (swipeDirection === 'right') transformStyle = `translateX(150vw) rotate(30deg)`;
+          const labelType = isEnglishCard(card) ? '🔤 英文' : '🎯 重點';
+
+          const nextI1 = calcNextFSRS(1, card?.interval || 0, card?.ease || 5).interval;
+          const nextI2 = calcNextFSRS(2, card?.interval || 0, card?.ease || 5).interval;
+          const nextI3 = calcNextFSRS(3, card?.interval || 0, card?.ease || 5).interval;
+          const nextI4 = calcNextFSRS(4, card?.interval || 0, card?.ease || 5).interval;
+
+          return (
+            <div className="flex flex-col h-full bg-gray-900 p-4 pb-24 overflow-hidden relative touch-none select-none">
+              <div className="flex justify-between items-center mb-6 text-white pt-2">
+                <button onClick={() => setCurrentView('today')} className="p-2 bg-gray-800 rounded-full active:scale-95"><X className="w-5 h-5"/></button>
+                <div className="flex flex-col items-center">
+                  <span className="text-xs font-bold text-gray-400 tracking-widest">進度 {studySessionIndex + 1} / {studySessionCards.length}</span>
+                  <div className="flex items-center mt-1 space-x-2 h-4">{combo > 0 && <span className="bg-orange-500 text-white text-[10px] px-2 py-0.5 rounded-full font-black animate-pulse shadow-[0_0_10px_rgba(249,115,22,0.6)]">🔥 {combo} 連擊</span>}</div>
+                </div>
+                <button onClick={handleUndo} disabled={reviewHistory.length === 0} className={`p-2 rounded-full active:scale-95 ${reviewHistory.length > 0 ? 'bg-gray-800 text-white' : 'bg-gray-800/50 text-gray-600'}`}><RotateCcw className="w-5 h-5"/></button>
+              </div>
+      
+              {floatingText && (
+                 <div key={floatingText.id} className={`absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 text-2xl font-black pointer-events-none animate-out slide-out-to-top-8 fade-out duration-1000 whitespace-nowrap ${floatingText.type === 'success' ? 'text-green-400 drop-shadow-[0_0_15px_rgba(74,222,128,0.8)]' : 'text-red-400 drop-shadow-[0_0_15px_rgba(248,113,113,0.8)]'}`}>{floatingText.text}</div>
+              )}
+      
+              <div className="flex-1 relative perspective-1000 z-10 w-full mx-auto flex flex-col justify-center items-center">
+                <div className={`w-full max-w-sm aspect-[3/4] sm:aspect-square relative transition-transform duration-300 transform-style-3d cursor-grab active:cursor-grabbing ${isFlipped ? 'rotate-y-180' : ''}`} style={{ transform: transformStyle + (isFlipped && !isDragging && !swipeDirection ? ' rotateY(180deg)' : '') }} onPointerDown={onPointerDown} onPointerMove={onPointerMove} onPointerUp={onPointerUp} onPointerCancel={onPointerUp}>
+                  <div className="absolute w-full h-full bg-white rounded-3xl shadow-2xl border border-gray-100 backface-hidden flex flex-col p-6">
+                    <div className="flex justify-between items-center mb-4">
+                      <span className={`text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider ${isEnglishCard(card) ? 'text-green-500 bg-green-50' : 'text-blue-500 bg-blue-50'}`}>{labelType}</span>
+                      {studyMode === 'cram' && <span className="text-[10px] font-bold text-yellow-600 bg-yellow-100 px-2 py-1 rounded shadow-sm flex items-center"><Zap className="w-3 h-3 mr-1"/>衝刺</span>}
+                    </div>
+                    <div className="flex-1 flex flex-col items-center justify-center text-center overflow-y-auto">
+                       <h3 className="text-2xl font-black text-gray-800 leading-relaxed break-words">{formatText(card?.front)}</h3>
+                       {isEnglishCard(card) && (
+                          <button onPointerDown={e=>e.stopPropagation()} onClick={e=>playAudio(card?.front, e)} className="mt-4 p-3 bg-blue-50 text-blue-500 rounded-full active:scale-95 shadow-sm border border-blue-100"><Volume2 className="w-6 h-6"/></button>
+                       )}
+                    </div>
+                    <div className="text-center text-gray-300 text-xs font-bold mt-4 animate-pulse flex items-center justify-center"><ChevronLeft className="w-4 h-4 opacity-50"/> 點擊翻面 / 左右滑動 <ChevronRight className="w-4 h-4 opacity-50"/></div>
+                  </div>
+      
+                  <div className="absolute w-full h-full bg-white rounded-3xl shadow-2xl border-4 border-indigo-100 backface-hidden flex flex-col p-6 rotate-y-180 overflow-y-auto">
+                    <div className="flex-1 flex flex-col justify-center text-center pb-8 pt-4">
+                       <h3 className="text-xl font-bold text-gray-800 leading-relaxed mb-6 break-words">{formatText(card?.back)}</h3>
+                    </div>
+                  </div>
+                </div>
+                {isDragging && dragX > 30 && <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-green-500 font-black text-4xl animate-in fade-in z-0 bg-white p-3 rounded-full shadow-xl border-4 border-green-200"><Check className="w-10 h-10"/></div>}
+                {isDragging && dragX < -30 && <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-red-500 font-black text-4xl animate-in fade-in z-0 bg-white p-3 rounded-full shadow-xl border-4 border-red-200"><X className="w-10 h-10"/></div>}
+              </div>
+      
+              <div className="flex justify-center items-center mt-8 space-x-2 sm:space-x-3 z-20 px-2 w-full max-w-sm mx-auto">
+                {isFlipped ? (
+                  studyMode === 'srs' ? (
+                    <>
+                      <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('left', 1); }} className="flex-1 py-3 rounded-2xl bg-red-500 text-white flex flex-col items-center justify-center font-bold shadow-lg shadow-red-500/30 active:scale-95 transition-transform">
+                        <span className="text-[10px] text-red-200 mb-0.5 font-medium">{formatDays(nextI1)}</span><span className="text-sm">忘記</span>
+                      </button>
+                      <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('right', 2); }} className="flex-1 py-3 rounded-2xl bg-yellow-500 text-white flex flex-col items-center justify-center font-bold shadow-lg shadow-yellow-500/30 active:scale-95 transition-transform">
+                        <span className="text-[10px] text-yellow-100 mb-0.5 font-medium">{formatDays(nextI2)}</span><span className="text-sm">困難</span>
+                      </button>
+                      <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('right', 3); }} className="flex-1 py-3 rounded-2xl bg-green-500 text-white flex flex-col items-center justify-center font-bold shadow-lg shadow-green-500/30 active:scale-95 transition-transform">
+                        <span className="text-[10px] text-green-200 mb-0.5 font-medium">{formatDays(nextI3)}</span><span className="text-sm">記得</span>
+                      </button>
+                      <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('right', 4); }} className="flex-1 py-3 rounded-2xl bg-blue-500 text-white flex flex-col items-center justify-center font-bold shadow-lg shadow-blue-500/30 active:scale-95 transition-transform">
+                        <span className="text-[10px] text-blue-200 mb-0.5 font-medium">{formatDays(nextI4)}</span><span className="text-sm">簡單</span>
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                       <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('left', 1); }} className="flex-1 max-w-[150px] py-4 rounded-2xl bg-red-500 text-white font-black shadow-lg shadow-red-500/30 active:scale-95 text-base sm:text-lg flex items-center justify-center"><X className="w-5 h-5 mr-1"/> 忘記</button>
+                       <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('right', 3); }} className="flex-1 max-w-[150px] py-4 rounded-2xl bg-green-500 text-white font-black shadow-lg shadow-green-500/30 active:scale-95 text-base sm:text-lg flex items-center justify-center"><Check className="w-5 h-5 mr-1"/> 記得</button>
+                    </>
+                  )
+                ) : (
+                   <button onPointerDown={e=>e.stopPropagation()} onClick={() => setIsFlipped(true)} className="w-full max-w-xs py-4 rounded-2xl bg-white/10 text-white border border-white/20 font-black shadow-[0_0_20px_rgba(255,255,255,0.1)] active:scale-95 text-lg hover:bg-white/20 transition-all">點擊翻面看答案</button>
+                )}
+              </div>
+            </div>
+          );
+        }
+        
+        if (currentView === 'today') {
+          const todayStr = getLocalYYYYMMDD();
+          const isStreakActive = stats.lastStudyDate === todayStr;
+          const validActivePets = (stats.activePets || []).filter(k => PET_FAMILIES[k]);
+          const firstPetKey = validActivePets.length > 0 ? validActivePets[0] : 'fire';
+          const petXp = (stats.petXp || {})[firstPetKey] || 0;
+          const petInfo = getPetStatus(firstPetKey, petXp);
+
+          const now = new Date();
+          const currentYear = now.getFullYear();
+          const currentMonth = now.getMonth();
+          const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+          const firstDayOfWeek = new Date(currentYear, currentMonth, 1).getDay(); 
+          
+          const calendarCells = [];
+          for (let i = 0; i < firstDayOfWeek; i++) calendarCells.push({ empty: true, key: `empty-${i}` });
+          for (let i = 1; i <= daysInMonth; i++) {
+            const dStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(i).padStart(2, '0')}`;
+            calendarCells.push({ empty: false, date: dStr, day: i, key: dStr });
+          }
+      
+          return (
+            <div className="p-4 animate-in fade-in slide-in-from-bottom-4 pb-24 h-full flex flex-col relative overflow-hidden">
+              <div className="bg-gradient-to-br from-gray-900 to-indigo-900 rounded-3xl p-5 shadow-xl mb-6 text-white border border-gray-700 relative overflow-hidden">
+                <div className="flex items-center mb-4 relative z-10">
+                  <div className="w-20 h-20 bg-white/10 rounded-full flex items-center justify-center shadow-inner border-2 border-white/20 backdrop-blur-sm relative cursor-pointer" onClick={() => setCurrentView('pokedex')}>
+                    {petInfo && <img src={petInfo?.currentStage?.img} alt="pet" className={`w-20 h-20 object-cover absolute rounded-full ${petInfo?.type==='pokemon'?'pixelated':''} hover:scale-110 transition-transform`} />}
+                  </div>
+                  <div className="ml-4 flex-1">
+                    <div className="flex items-center space-x-2">
+                      <h2 className="text-xl font-black text-yellow-400">{petInfo ? petInfo?.currentStage?.name : '神秘寵物'}</h2>
+                      <button onClick={() => setCurrentView('pokedex')} className="bg-white/20 hover:bg-white/30 px-2 py-1 rounded text-[10px] font-bold flex items-center">去升級 <ChevronRight className="w-3 h-3 ml-0.5"/></button>
+                    </div>
+                    <p className="text-[10px] text-indigo-200 mt-1">{petInfo ? petInfo?.familyName : ''} - 努力成長中</p>
+                    <div className="flex items-center text-xs text-gray-300 mt-2"><span className="mr-1 text-xs">💰</span> 可用經驗值: {stats.xp || 0} XP</div>
+                  </div>
+                </div>
+                {petInfo && petInfo?.nextStage && (
+                  <><div className="w-full bg-gray-800 rounded-full h-2.5 mt-2 overflow-hidden border border-gray-700 relative z-10"><div className="bg-gradient-to-r from-yellow-400 to-orange-500 h-2.5 rounded-full transition-all duration-1000" style={{ width: `${petInfo?.progress || 0}%` }}></div></div><div className="text-[10px] text-right text-gray-400 mt-1 relative z-10">距離下一階還需 {(petInfo?.nextStage?.xp || 0) - petXp} XP</div></>
+                )}
+                {petInfo && !petInfo?.nextStage && (<div className="text-[10px] text-right text-yellow-400 mt-2 font-bold relative z-10">🎉 已達到滿級最終型態！</div>)}
+              </div>
+      
+              <div className="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-gray-100 relative mt-4">
+                <div className="absolute -top-4 left-2 flex flex-wrap gap-1 z-10 w-[95%]">
+                  {[
+                    {cond: stats.feverCharm>0, text:`🔥 3x XP: ${stats.feverCharm}題`, bg:'bg-red-500'},
+                    {cond: stats.doubleXpSwipes>0 && stats.feverCharm<=0, text:`🧪 2x XP: ${stats.doubleXpSwipes}題`, bg:'bg-blue-500'},
+                    {cond: stats.luckyClover>0, text:`🍀 寶箱機率UP: ${stats.luckyClover}題`, bg:'bg-green-500'},
+                    {cond: stats.comboBattery>0, text:`⚡ 電池: ${stats.comboBattery}個`, bg:'bg-yellow-500'},
+                    {cond: stats.comboShields>0, text:`🛡️ 護盾: ${stats.comboShields}次`, bg:'bg-purple-500'}
+                  ].filter(b=>b.cond).map(b=><span key={b.text} className={`${b.bg} text-white text-[9px] px-2 py-0.5 rounded-full font-bold shadow border border-white`}>{b.text}</span>)}
+                </div>
+                {[
+                  {label:'連擊天數', icon:'🔥', val:stats.streak||0, color:'orange', act:isStreakActive}, 
+                  {label:'扭蛋進度', icon:'🎯', val:`${stats.gachaProgress||0}/50`, color:'green', act:true}, 
+                  {label:'扭蛋券', icon:'🎟️', val:stats.gachaTokens||0, color:'pink', act:true}
+                ].map((s,i)=>(
+                   <React.Fragment key={s.label}>
+                     {i>0 && <div className="h-8 w-px bg-gray-200 mt-2"></div>}
+                     <div className="flex flex-col items-center mt-2"><span className="text-[10px] text-gray-500 font-bold mb-1">{s.label}</span><div className="flex items-center"><span className={`mr-1 ${s.act?'animate-pulse':'opacity-50'}`}>{s.icon}</span><span className={`text-lg font-black text-${s.color}-600`}>{s.val}</span></div></div>
+                   </React.Fragment>
+                ))}
+              </div>
+
+              <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 mt-4 mb-6">
+                 <div className="flex justify-between items-center mb-3">
+                    <span className="text-sm font-bold text-gray-800 flex items-center"><Calendar className="w-4 h-4 mr-1 text-green-500"/> {currentYear}年 {currentMonth + 1}月 打卡紀錄</span>
+                    <span className="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-1 rounded">總題數: {stats.totalStudied || 0}</span>
+                 </div>
+                 
+                 <div className="grid grid-cols-7 gap-1 mb-1.5 text-center">
+                   {['日','一','二','三','四','五','六'].map(d=><div key={d} className="text-[10px] font-bold text-gray-400">{d}</div>)}
+                 </div>
+
+                 <div className="grid grid-cols-7 gap-1.5">
+                    {calendarCells.map(cell => {
+                       if (cell.empty) return <div key={cell.key} className="w-full aspect-square" />;
+                       const count = (stats.studyHistory || {})[cell.date] || 0;
+                       let color = "bg-gray-50 text-gray-400";
+                       if(count > 0 && count <= 10) color = "bg-green-200 text-green-800 shadow-sm border border-green-300";
+                       else if(count > 10 && count <= 30) color = "bg-green-400 text-white shadow-sm border border-green-500";
+                       else if(count > 30 && count <= 60) color = "bg-green-500 text-white shadow-sm border border-green-600";
+                       else if(count > 60) color = "bg-green-700 text-white shadow-sm border border-green-800";
+                       
+                       const isToday = cell.date === todayStr;
+                       
+                       return (
+                         <div key={cell.key} className={`relative w-full aspect-square rounded-[6px] flex justify-center items-center font-bold text-[10px] sm:text-xs ${color} ${isToday ? 'ring-2 ring-indigo-400 ring-offset-1' : ''}`} title={`${cell.date}: 複習 ${count} 題`}>
+                           {cell.day}
+                         </div>
+                       );
+                    })}
+                 </div>
+                 <div className="flex justify-end items-center mt-3 space-x-1 text-[8px] font-bold text-gray-400">
+                   <span>少</span><div className="w-2 h-2 bg-gray-100 rounded-[2px]"></div><div className="w-2 h-2 bg-green-200 rounded-[2px]"></div><div className="w-2 h-2 bg-green-400 rounded-[2px]"></div><div className="w-2 h-2 bg-green-500 rounded-[2px]"></div><div className="w-2 h-2 bg-green-700 rounded-[2px]"></div><span>多</span>
+                 </div>
+              </div>
+      
+              <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-3xl p-6 text-white shadow-lg mb-6 text-center">
+                <p className="text-indigo-100 font-medium mb-1">今日待複習卡片</p>
+                <h3 className="text-5xl font-extrabold mb-4">{isDataLoading ? <Loader2 className="w-10 h-10 mx-auto animate-spin" /> : dueCards.length} <span className="text-lg font-medium ml-1">張</span></h3>
+                
+                <div className="flex justify-center items-center space-x-4 mb-4 bg-white/10 rounded-xl p-2 border border-white/20">
+                   <label className="flex items-center space-x-1 cursor-pointer">
+                     <input type="checkbox" checked={filterKeypoint} onChange={e => setFilterKeypoint(e.target.checked)} className="rounded text-blue-600 focus:ring-blue-500" />
+                     <span className="text-sm font-bold text-indigo-50">重點卡</span>
+                   </label>
+                   <label className="flex items-center space-x-1 cursor-pointer">
+                     <input type="checkbox" checked={filterEnglish} onChange={e => setFilterEnglish(e.target.checked)} className="rounded text-green-600 focus:ring-green-500" />
+                     <span className="text-sm font-bold text-indigo-50">英文卡</span>
+                   </label>
+                </div>
+
+                <div className="space-y-3">
+                   <button onClick={() => startStudySession(dueCards, 'srs')} disabled={dueCards.length === 0 || isDataLoading} className="w-full py-4 bg-white text-indigo-600 rounded-xl font-black text-lg shadow-xl active:scale-95 disabled:opacity-50 transition-all transform hover:-translate-y-1 flex items-center justify-center">
+                     {dueCards.length > 0 ? '🚀 記憶排程 (獲取口糧)' : '今日已餵飽 🎉'}
+                   </button>
+                   {dueCards.length > 0 && (
+                      <button onClick={() => startStudySession(dueCards, 'list')} className="w-full py-3 bg-indigo-700/50 text-white rounded-xl font-bold text-sm shadow-md active:scale-95 transition-all flex items-center justify-center border border-indigo-400/30">
+                         📜 展開為清單速讀 (多張同屏)
+                      </button>
+                   )}
+                </div>
+              </div>
+      
+              {hellCards.length > 0 && (
+                <div className="bg-red-50 p-4 rounded-2xl border border-red-100 mb-6">
+                  <div className="mb-3"><h4 className="font-bold text-red-700 flex items-center"><AlertTriangle className="w-4 h-4 mr-1"/> 煉獄易錯卡</h4><p className="text-xs text-red-500">偵測到 {hellCards.length} 張常忘記的卡片</p></div>
+                  <div className="flex space-x-2">
+                     <button onClick={() => startStudySession(hellCards, 'cram')} className="flex-1 py-2 bg-red-600 text-white font-bold text-xs rounded-xl shadow active:scale-95 flex items-center justify-center"><Zap className="w-4 h-4 mr-1"/> 單張滑動特訓</button>
+                     <button onClick={() => startStudySession(hellCards, 'list')} className="flex-1 py-2 bg-red-800 text-white font-bold text-xs rounded-xl shadow active:scale-95 flex items-center justify-center"><Files className="w-4 h-4 mr-1"/> 清單速讀</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        }
+      
+        if (currentView === 'cardList') {
+          let displayCards = cards.filter(c => c.subject === activeSubject && c.chapter === activeChapter);
+          displayCards = displayCards.filter(c => activeTab === 'keypoint' ? isKeypointCard(c) : isEnglishCard(c));
+          
+          if (searchQuery) { const q = searchQuery.toLowerCase(); displayCards = displayCards.filter(c => (c.front||'').toLowerCase().includes(q) || (c.back||'').toLowerCase().includes(q)); }
+          const allCardsInActiveChapter = cards.filter(c => c.subject === activeSubject && c.chapter === activeChapter);
+          const cardsToStudy = filterCardsForSession(allCardsInActiveChapter);
+
+          return (
+            <div className="p-4 animate-in slide-in-from-right-4 pb-24 flex flex-col h-full">
+              <div className="flex items-center justify-between mb-4"><div className="flex items-center"><button onClick={() => setCurrentView('chapters')} className="p-2 -ml-2 text-gray-500 hover:bg-gray-100 rounded-full"><ChevronLeft className="w-6 h-6" /></button><div className="ml-2"><h2 className="text-lg font-bold text-gray-800 leading-tight">{activeChapter}</h2></div></div></div>
+              
+              {allCardsInActiveChapter.length > 0 && (
+                <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 mb-4">
+                  <div className="flex items-center justify-between mb-3 border-b border-gray-100 pb-2">
+                     <span className="text-sm font-bold text-gray-700 flex items-center"><Filter className="w-4 h-4 mr-1"/> 選擇測驗範圍</span>
+                     <div className="flex space-x-3">
+                       <label className="flex items-center space-x-1 cursor-pointer">
+                         <input type="checkbox" checked={filterKeypoint} onChange={e => setFilterKeypoint(e.target.checked)} className="rounded text-blue-600 focus:ring-blue-500" />
+                         <span className="text-xs font-bold text-gray-600">重點卡</span>
+                       </label>
+                       <label className="flex items-center space-x-1 cursor-pointer">
+                         <input type="checkbox" checked={filterEnglish} onChange={e => setFilterEnglish(e.target.checked)} className="rounded text-green-600 focus:ring-green-500" />
+                         <span className="text-xs font-bold text-gray-600">英文卡</span>
+                       </label>
+                     </div>
+                  </div>
+                  <div className="flex flex-col space-y-2">
+                     <div className="flex space-x-2">
+                        <button onClick={() => startStudySession(cardsToStudy.filter(c => (c.nextReviewDate||0) <= Date.now()), 'srs')} className="flex-1 flex items-center justify-center bg-indigo-600 text-white px-3 py-2.5 rounded-xl font-bold shadow-sm active:scale-95 text-xs transition-all"><Calendar className="w-4 h-4 mr-1" /> 記憶排程</button>
+                        <button onClick={() => startStudySession(cardsToStudy, 'cram')} className="flex-1 flex items-center justify-center bg-yellow-500 text-white px-3 py-2.5 rounded-xl font-bold shadow-sm active:scale-95 text-xs transition-all"><Zap className="w-4 h-4 mr-1" /> 單張衝刺</button>
+                     </div>
+                     <button onClick={() => startStudySession(cardsToStudy, 'list')} className="w-full flex items-center justify-center bg-gray-50 text-indigo-600 border border-indigo-200 px-3 py-2.5 rounded-xl font-bold shadow-sm active:scale-95 text-xs transition-all"><Files className="w-4 h-4 mr-1" /> 展開為清單速讀</button>
+                  </div>
+                </div>
+              )}
+
+              <div className="flex items-center bg-gray-100 p-2 rounded-xl mb-4"><Search className="w-4 h-4 text-gray-400 mx-2" /><input type="text" placeholder="搜尋內容..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="bg-transparent border-none outline-none text-sm w-full text-gray-700" />{searchQuery && <button onClick={() => setSearchQuery('')}><X className="w-4 h-4 text-gray-400 mr-2" /></button>}</div>
+              
+              <div className="flex p-1 bg-gray-200 rounded-xl mb-4 overflow-x-auto scrollbar-hide space-x-1">
+                <button onClick={() => setActiveTab('keypoint')} className={`flex-1 min-w-[120px] flex justify-center items-center py-2 text-xs font-semibold rounded-lg transition-all ${activeTab === 'keypoint' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-500'}`}><BookOpen className="w-3 h-3 mr-1" /> 🎯 轉考重點</button>
+                <button onClick={() => setActiveTab('english')} className={`flex-1 min-w-[120px] flex justify-center items-center py-2 text-xs font-semibold rounded-lg transition-all ${activeTab === 'english' ? 'bg-white text-green-600 shadow-sm' : 'text-gray-500'}`}><Type className="w-3 h-3 mr-1" /> 🔤 延伸生字</button>
+              </div>
+
+              <div className="space-y-4 flex-1 overflow-y-auto pb-4">
+                {displayCards.map(card => (
+                  <div key={card.id || Math.random()} className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 relative group">
+                    <div className="mb-2 flex justify-between items-start">
+                      <div className="flex flex-wrap gap-1">
+                         <span className={`text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider ${isEnglishCard(card) ? 'text-green-500 bg-green-50' : 'text-blue-500 bg-blue-50'}`}>{isEnglishCard(card) ? '🔤 延伸生字' : '🎯 轉考重點'}</span>
+                      </div>
+                      <span className="text-[10px] bg-gray-100 text-gray-600 px-2 py-1 rounded-full font-bold">難度: {card?.ease || 5}</span>
+                    </div>
+                    <div className="flex justify-between items-center mt-2">
+                       <div className="text-lg font-bold text-gray-800">{formatText(card.front)}</div>
+                       {isEnglishCard(card) && (<button onClick={e=>playAudio(card.front, e)} className="p-2 ml-2 bg-blue-50 text-blue-500 rounded-full active:scale-95"><Volume2 className="w-4 h-4"/></button>)}
+                    </div>
+                    <hr className="my-3 border-gray-100" /><div className="mt-2 text-gray-600 text-sm leading-relaxed">{formatText(card.back)}</div>
+                    <div className="absolute top-2 right-2 opacity-100 md:opacity-0 group-hover:opacity-100"><button onClick={() => deleteCardFromCloud(card.id)} className="p-2 text-gray-300 hover:text-red-500 bg-white rounded-full hover:bg-red-50"><Trash2 className="w-4 h-4" /></button></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        }
+      
+        if (currentView === 'folders') {
+          const subjects = [...new Set((cards || []).map(c => c.subject).filter(Boolean))];
+          return (
+            <div className="p-4 animate-in fade-in slide-in-from-right-4 pb-24">
+              <h2 className="text-xl font-bold mb-4 text-gray-800 flex justify-between items-center">我的牌組 {isDataLoading && <Loader2 className="w-5 h-5 text-blue-500 animate-spin" />}</h2>
+              {cards.length > 0 && <button onClick={() => setShowMixModal(true)} className="w-full mb-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl font-bold shadow-md hover:shadow-lg active:scale-95 transition-all flex items-center justify-center"><Shuffle className="w-5 h-5 mr-2" /> ✨ 綜合測驗 (跨章節)</button>}
+              {subjects.length === 0 && !isDataLoading ? (
+                <div className="text-center py-12 px-4 bg-white rounded-2xl border border-dashed border-gray-300"><span className="text-5xl">🗄️</span><p className="text-gray-500 font-medium mt-2">您的雲端空間目前是空的</p></div>
+              ) : (
+                <div className="grid grid-cols-2 gap-4">
+                  {subjects.map(subject => (
+                    <button key={subject} onClick={() => { setActiveSubject(subject); setCurrentView('chapters'); }} className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md active:scale-95 transition-all"><Folder className="w-12 h-12 text-blue-500 mb-2 fill-blue-50" /><span className="font-semibold text-gray-700">{subject}</span><span className="text-xs text-gray-400 mt-1">{cards.filter(c => c.subject === subject).length} 張字卡</span></button>
+                  ))}
+                </div>
+              )}
+            </div>
+          );
+        }
+      
+        if (currentView === 'chapters') {
+          const chaptersInActiveSubject = [...new Set((cards || []).filter(c => c.subject === activeSubject).map(c => c.chapter).filter(Boolean))];
+          const subjects = [...new Set((cards || []).map(c => c.subject).filter(Boolean))];
+          return (
+            <div className="p-4 animate-in slide-in-from-right-4 pb-24">
+              <div className="flex items-center mb-6"><button onClick={() => setCurrentView('folders')} className="p-2 -ml-2 text-gray-500 hover:bg-gray-100 rounded-full"><ChevronLeft className="w-6 h-6" /></button><h2 className="text-xl font-bold ml-2 text-gray-800">{activeSubject}</h2></div>
+              <div className="space-y-3">
+                {chaptersInActiveSubject.map(chapter => {
+                  const all = cards.filter(c => c.subject === activeSubject && c.chapter === chapter);
+                  return (
+                    <div key={chapter} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all relative">
+                      <button onClick={(e) => { e.stopPropagation(); startStudySession(all, 'cram'); }} className="absolute right-4 top-4 p-2 bg-indigo-50 text-indigo-600 rounded-full hover:bg-indigo-100 z-10" title="一鍵衝刺複習"><Play className="w-5 h-5 fill-indigo-600" /></button>
+                      <div onClick={() => { setActiveChapter(chapter); setCurrentView('cardList'); setSearchQuery(''); }} className="w-full flex flex-col p-4 pr-16 cursor-pointer active:bg-gray-50">
+                        <div className="flex items-center w-full mb-2"><div className="p-2 bg-indigo-50 rounded-lg mr-3"><FileText className="w-5 h-5 text-indigo-500" /></div><span className="font-medium text-gray-700 text-left">{chapter}</span></div>
+                        <div className="flex space-x-2 ml-12 text-[10px] font-medium text-gray-500">
+                          <span>重點:{all.filter(isKeypointCard).length}</span> | <span>生字:{all.filter(isEnglishCard).length}</span>
+                        </div>
+                      </div>
+                      <div className="bg-gray-50 px-4 py-2 border-t border-gray-100 flex justify-between items-center">
+                         <span className="text-xs text-gray-400">總計 {all.length} 張</span>
+                         <div className="flex items-center space-x-2">
+                            <button onClick={() => { setChapterToMove(chapter); setShowMoveModal(true); }} className="flex items-center text-xs font-bold text-gray-500 hover:text-indigo-600 transition-colors p-1"><FolderInput className="w-3 h-3 mr-1" /> 移動</button>
+                         </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+              
+              {showMoveModal && (
+                <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
+                  <div className="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl animate-in zoom-in-95">
+                     <h3 className="font-bold text-lg mb-2 text-gray-800">移動章節</h3>
+                     <p className="text-xs text-gray-500 mb-4">將「{chapterToMove}」移動到以下資料夾：</p>
+                     <input list="folder-list" value={targetFolder} onChange={e=>setTargetFolder(e.target.value)} placeholder="選擇現有或輸入新資料夾名稱" className="w-full p-3 border border-gray-300 rounded-xl mb-6 outline-none focus:ring-2 focus:ring-indigo-500" />
+                     <datalist id="folder-list">{subjects.map(s => <option key={s} value={s} />)}</datalist>
+                     <div className="flex space-x-3">
+                       <button onClick={() => setShowMoveModal(false)} className="flex-1 p-3 bg-gray-100 text-gray-600 font-bold rounded-xl active:scale-95">取消</button>
+                       <button onClick={executeMoveChapter} disabled={isSaving} className="flex-1 p-3 bg-indigo-600 text-white font-bold rounded-xl active:scale-95 flex justify-center items-center">
+                          {isSaving ? <Loader2 className="w-5 h-5 animate-spin"/> : '確認移動'}
+                       </button>
+                     </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        }
+      
+        if (currentView === 'upload') {
+          const subjects = [...new Set((cards || []).map(c => c.subject).filter(Boolean))];
+          return (
+            <div className="p-4 animate-in fade-in slide-in-from-bottom-4 pb-24">
+              <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center"><Files className="w-6 h-6 mr-2 text-indigo-500" /> AI 全能建卡</h2>
+              
+              <div className="bg-indigo-50 border border-indigo-100 text-indigo-800 text-xs p-3 rounded-xl mb-4 font-bold flex items-center shadow-sm">
+                <span className="mr-2 text-lg">💡</span> 全新引擎：為頂尖大學轉學考特化！自動生成「重點卡」與「英文卡」雙檔案。若有解題必備單字將強制收錄。
+              </div>
+
+              <div className="space-y-5">
+                <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                  <input type="text" placeholder="科目/資料夾 (如: 微積分、經濟學)" value={uploadSubject} onChange={e=>setUploadSubject(e.target.value)} list="subjects-list" className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl mb-3 outline-none font-medium text-gray-800 focus:ring-2 focus:ring-indigo-400" />
+                  <datalist id="subjects-list">{subjects.map(s => <option key={s} value={s} />)}</datalist>
+                  <input type="text" placeholder="章節名稱 (如: Ch1 極限)" value={uploadChapter} onChange={e=>setUploadChapter(e.target.value)} className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none font-medium text-gray-800 focus:ring-2 focus:ring-indigo-400" />
+                </div>
+
+                <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                  <label className="block text-sm font-semibold mb-2 flex items-center text-indigo-700"><Sparkles className="w-4 h-4 mr-1"/> 自訂專屬 AI 抓題指令 (選填)</label>
+                  <textarea value={customExtractionRule} onChange={(e)=>setCustomExtractionRule(e.target.value)} placeholder="例如：幫我把這張圖裡的所有公式抓出來、只要列出專有名詞就好..." className="w-full h-20 p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-sm resize-none focus:ring-2 focus:ring-indigo-400" />
+                </div>
+                <div className="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                  <div className="flex justify-between items-center mb-3">
+                    <label className="block text-sm font-semibold">上傳講義資料</label>
+                    <div className="flex bg-gray-100 rounded-lg p-1">
+                      <button onClick={() => setUploadMode('image')} className={`px-3 py-1 text-xs font-bold rounded-md ${uploadMode==='image'?'bg-white shadow-sm text-blue-600':'text-gray-500'}`}>圖片</button>
+                      <button onClick={() => setUploadMode('text')} className={`px-3 py-1 text-xs font-bold rounded-md ${uploadMode==='text'?'bg-white shadow-sm text-blue-600':'text-gray-500'}`}>文字</button>
+                    </div>
+                  </div>
+                  {uploadMode === 'image' ? (
+                    <div className="grid grid-cols-3 gap-2">
+                      {selectedImages.map((img, idx) => (
+                        <div key={idx} className="relative w-full aspect-square rounded-xl overflow-hidden border"><img src={img?.dataUrl} alt="p" className="w-full h-full object-cover" /><button onClick={() => {const n=[...selectedImages]; n.splice(idx,1); setSelectedImages(n);}} className="absolute top-1 right-1 p-1 bg-black/60 text-white rounded-full"><X className="w-3 h-3" /></button></div>
+                      ))}
+                      <label className="flex flex-col items-center justify-center w-full aspect-square border-2 border-dashed border-gray-300 rounded-xl bg-gray-50 cursor-pointer active:scale-95"><span className="text-2xl mb-1">🖼️</span><span className="text-[10px] text-gray-500 font-medium">拍照/圖庫</span><input type="file" multiple accept="image/*" className="hidden" onChange={async e=>{const fs=Array.from(e.target.files); if(!fs.length)return; const ns=await Promise.all(fs.map(f=>new Promise(r=>{const rd=new FileReader();rd.onload=async ev=>r({dataUrl:await compressImage(ev.target.result),mimeType:'image/jpeg'});rd.readAsDataURL(f);}))); setSelectedImages(p=>[...p,...ns]);}} /></label>
+                    </div>
+                  ) : (<textarea value={rawTextInput} onChange={(e)=>setRawTextInput(e.target.value)} placeholder="貼上您的讀書筆記..." className="w-full h-32 p-3 bg-gray-50 border border-gray-200 rounded-xl outline-none text-sm resize-none focus:ring-2 focus:ring-indigo-400" />)}
+                </div>
+                
+                <button onClick={startGeneration} disabled={isGenerating || (!selectedImages.length && !rawTextInput.trim()) || !uploadSubject || !uploadChapter} className="w-full flex items-center justify-center p-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-bold shadow-xl hover:shadow-2xl disabled:opacity-50 active:scale-[0.98] transition-all">
+                  {isGenerating ? <><Loader2 className="w-5 h-5 mr-2 animate-spin" /> AI 雙軌解析中...</> : <><Sparkles className="w-5 h-5 mr-2"/> 產生 頂大轉考特化字卡</>}
+                </button>
+              </div>
+            </div>
+          );
+        }
+      
+        if (currentView === 'reviewGen') {
+          return (
+            <div className="p-4 animate-in slide-in-from-bottom-4 pb-32 h-full flex flex-col relative">
+              <div className="flex justify-between mb-4 sticky top-0 bg-gray-50/90 backdrop-blur-md pt-2 pb-2 z-20"><h2 className="text-xl font-bold flex items-center"><Sparkles className="w-5 h-5 mr-2 text-indigo-500"/>確認與補充</h2><button onClick={saveGeneratedCardsToCloud} className="flex items-center bg-green-500 text-white px-4 py-2 rounded-full font-bold shadow-sm active:scale-95"><Save className="w-4 h-4 mr-1" /> 儲存 ({generatedCards.length})</button></div>
+              <div className="space-y-4 flex-1 overflow-y-auto pb-4">
+                {generatedCards.length === 0 && <p className="text-center text-gray-400 mt-10 font-bold">尚無字卡，請在下方輸入指示讓 AI 補充</p>}
+                {generatedCards.map(c => (
+                  <div key={c.id} className="bg-white p-4 rounded-xl shadow-sm border-l-4 border-indigo-400 relative">
+                    <button onClick={() => removeGeneratedCard(c.id)} className="absolute -top-2 -right-2 p-1 bg-red-100 text-red-500 rounded-full shadow-sm"><X className="w-4 h-4" /></button>
+                    <div className="flex gap-1 mb-2">
+                       <span className="text-[10px] font-bold px-2 py-1 bg-indigo-50 text-indigo-500 rounded uppercase">{isEnglishCard(c) ? '🔤 延伸生字' : '🎯 轉考重點'}</span>
+                    </div>
+                    <textarea value={c.front || ''} onChange={(e) => updateGeneratedCard(c.id, 'front', e.target.value)} className="w-full p-2 bg-gray-50 border rounded-lg mt-2 text-sm font-bold outline-none" rows={2}/>
+                    <textarea value={c.back || ''} onChange={(e) => updateGeneratedCard(c.id, 'back', e.target.value)} className="w-full p-2 bg-gray-50 border rounded-lg mt-2 text-xs outline-none" rows={3}/>
+                  </div>
+                ))}
+              </div>
+
+              <div className="fixed bottom-0 left-0 w-full max-w-md mx-auto bg-white p-3 border-t border-gray-200 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)] z-30 pb-safe">
+                 <div className="flex items-center space-x-2">
+                    <input type="text" value={additionalPrompt} onChange={e=>setAdditionalPrompt(e.target.value)} onKeyPress={e => e.key === 'Enter' && appendMoreCards()} placeholder="AI 漏抓了？輸入指示補充..." className="flex-1 bg-gray-100 p-3 rounded-xl outline-none text-sm font-medium focus:ring-2 focus:ring-indigo-400" />
+                    <button onClick={appendMoreCards} disabled={isGeneratingMore || !additionalPrompt.trim()} className="bg-indigo-600 text-white p-3 rounded-xl font-bold shadow-md active:scale-95 disabled:opacity-50">
+                       {isGeneratingMore ? <Loader2 className="w-5 h-5 animate-spin" /> : <MessageCircle className="w-5 h-5" />}
+                    </button>
+                 </div>
+              </div>
+            </div>
+          );
+        }
+
+        if (currentView === 'pokedex') {
+          return (
+            <div className="p-4 animate-in fade-in slide-in-from-right-4 pb-24">
+              <div className="flex items-center mb-6"><h2 className="text-2xl font-black text-gray-800 flex items-center"><span className="text-2xl mr-2">🎟️</span> 圖鑑 & 扭蛋中心</h2></div>
+              <div className="bg-gradient-to-r from-pink-500 to-purple-600 p-6 rounded-3xl shadow-xl mb-8 text-white relative overflow-hidden border border-pink-400">
+                <div className="absolute -right-10 -top-10 opacity-20 text-9xl">👑</div>
+                <div className="relative z-10 flex flex-col items-center text-center">
+                  <h3 className="font-black text-2xl mb-1 flex items-center"><span className="text-xl mr-2">✨</span> 頂流抽卡機</h3>
+                  <p className="text-pink-100 text-xs mb-4">有極低機率抽出 SSR 傳說精靈！</p>
+                  <div className="bg-black/30 px-4 py-2 rounded-full mb-4 flex items-center">
+                    <span className="text-sm font-bold mr-3">持有扭蛋券：{stats.gachaTokens || 0} 張</span>
+                    <span className="text-[10px] text-pink-200 border-l border-pink-400/50 pl-3">進度 {stats.gachaProgress || 0}/50 題</span>
+                  </div>
+                  <button onClick={handleGachaDraw} disabled={(stats.gachaTokens || 0) < 1} className="w-full py-4 bg-white text-purple-700 font-black rounded-xl shadow-lg active:scale-95 disabled:opacity-50 text-lg hover:shadow-xl transition-all">
+                    開始抽卡 (消耗 1 券)
+                  </button>
+                </div>
+              </div>
+              
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-6 flex justify-between items-center text-sm font-bold text-gray-700">
+                <span>💰 可用升級經驗值:</span><span className="text-lg text-indigo-600">{stats.xp || 0} XP</span>
+              </div>
+
+              <p className="text-sm text-gray-500 mb-4 font-bold border-b pb-2">已解鎖圖鑑</p>
+              <div className="grid grid-cols-1 gap-4">
+                {Object.entries(PET_FAMILIES).map(([k, f]) => {
+                  if (!f) return null; const isU = (stats.unlockedPets||['fire']).includes(k); const pX = (stats.petXp||{})[k]||0; const pI = isU ? getPetStatus(k, pX) : null; const isA = (stats.activePets||[]).includes(k); const isS = f.secret && !isU; 
+                  return (
+                    <div key={k} className={`bg-white rounded-2xl p-4 border-2 transition-all ${isA ? 'border-indigo-500 shadow-md' : 'border-gray-100 shadow-sm'} ${!isU && 'opacity-60 grayscale'}`}>
+                      <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-bold text-gray-800 text-lg flex items-center">{isS ? '？？？ (極秘 SSR)' : (isU||!f.secret ? f.name : '？？？ (未解鎖)')}</h3>
+                        {isA && <span className="bg-indigo-500 text-white text-[10px] px-2 py-1 rounded-full font-bold">已召喚在桌面</span>}
+                        {!isU && <span className="bg-gray-200 text-gray-500 text-[10px] px-2 py-1 rounded-full font-bold">未解鎖</span>}
+                      </div>
+                      {!isU && <p className="text-[10px] text-gray-400 text-center mt-4 mb-2">請透過扭蛋解鎖。</p>}
+                      <div className="flex justify-between items-end mt-4 px-2 overflow-x-auto scrollbar-hide">
+                        {f.stages.map((s, i) => {
+                          const r = isU && pI && pI.currentStage.xp >= s.xp;
+                          return (
+                            <div key={i} className="flex flex-col items-center relative flex-shrink-0 mr-4 last:mr-0">
+                              <img src={isU||!f.secret ? s.img : getPokeItem()} alt="?" className={`w-14 h-14 rounded-full object-cover ${f.type==='pokemon'?'pixelated':''} ${isU&&r ? 'shadow border border-gray-100' : 'brightness-0 opacity-30'}`} />
+                              <span className={`text-[10px] font-bold mt-1 whitespace-nowrap ${isU&&r ? 'text-gray-700' : 'text-gray-400'}`}>{isU&&r ? s.name : (isS||f.secret ? '???' : s.name.split(' ')[0])}</span>
+                              {i < f.stages.length - 1 && <div className="absolute -right-6 top-1/2 -translate-y-1/2 text-gray-200 text-xs">➔</div>}
+                            </div>
+                          )
+                        })}
+                      </div>
+                      
+                      {isU && pI?.nextStage && (
+                        <div className="mt-4 bg-indigo-50/50 p-3 rounded-xl border border-indigo-100 flex flex-col items-center">
+                          <div className="text-[10px] font-bold text-gray-500 mb-2 flex items-center justify-between w-full px-1">
+                             <span>目前進度</span><span className="text-indigo-600">{pX} / {pI.nextStage.xp} XP</span>
+                          </div>
+                          <div className="w-full bg-gray-200 rounded-full h-2 mb-3 overflow-hidden">
+                             <div className="bg-indigo-500 h-2 rounded-full transition-all" style={{ width: `${pI.progress}%` }}></div>
+                          </div>
+                          <button 
+                             onClick={() => handleUpgradePet(k, pI.nextStage.xp - pX)} 
+                             disabled={(stats.xp || 0) < (pI.nextStage.xp - pX)} 
+                             className={`w-full py-2 rounded-xl font-bold text-xs shadow-sm active:scale-95 transition-all ${(stats.xp || 0) >= (pI.nextStage.xp - pX) ? 'bg-gradient-to-r from-blue-500 to-indigo-600 text-white hover:shadow-md' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}`}
+                          >
+                             {(stats.xp || 0) >= (pI.nextStage.xp - pX) ? `⚡ 消耗 ${pI.nextStage.xp - pX} XP 升級` : '持有 XP 不足'}
+                          </button>
+                        </div>
+                      )}
+                      {isU && !pI?.nextStage && <div className="mt-4 text-center text-xs font-bold text-yellow-600 bg-yellow-50 py-2 rounded-xl border border-yellow-100">🎉 已達滿級，無法再升級</div>}
+
+                      {isU && (<button onClick={() => togglePetActive(k)} className={`w-full mt-4 py-3 font-bold text-sm rounded-xl active:scale-95 border ${isA ? 'bg-gray-100 text-gray-500 border-gray-200' : 'bg-indigo-50 text-indigo-600 border-indigo-200'}`}>{isA ? '收回精靈球 / 休息' : '召喚伴讀 (最多3隻)'}</button>)}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        }
+
+        if (currentView === 'settings') {
+          const MAX_CARDS = 5000; const storagePercent = Math.min(((cards || []).length / MAX_CARDS) * 100, 100).toFixed(1);
+          return (
+            <div className="p-4 animate-in fade-in slide-in-from-right-4 pb-24">
+              <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center"><Settings className="w-6 h-6 mr-2 text-indigo-500" /> 系統與設定</h2>
+              <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 mb-6">
+                <div className="flex items-center justify-between mb-2"><h3 className="font-bold text-gray-800 flex items-center"><span className="mr-2 text-lg">💾</span> 雲端空間狀態</h3><span className="text-xs font-bold text-gray-500">{(cards || []).length} / {MAX_CARDS} 張</span></div>
+                <div className="w-full bg-gray-100 rounded-full h-3 mt-3 overflow-hidden border border-gray-200"><div className={`h-3 rounded-full transition-all duration-1000 ${storagePercent > 80 ? 'bg-red-500' : 'bg-blue-500'}`} style={{ width: `${storagePercent}%` }}></div></div>
+              </div>
+              <div className={`bg-white p-6 rounded-2xl shadow-sm border relative overflow-hidden mb-6 ${customAccount ? 'border-blue-300' : 'border-gray-200'}`}>
+                <div className={`absolute top-0 left-0 w-1 h-full ${customAccount ? 'bg-blue-500' : 'bg-gray-400'}`}></div>
+                {customAccount ? (
+                  <div>
+                    <div className="flex justify-between items-center mb-4"><span className="bg-blue-50 text-blue-600 text-xs font-bold px-2 py-1 rounded-full">已綁定本機雲端</span></div>
+                    <div className="flex items-center text-gray-800 mb-6">
+                      <div className="w-12 h-12 bg-gradient-to-tr from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-xl mr-4 shadow-sm">{String(customAccount.username || 'U').charAt(0).toUpperCase()}</div>
+                      <div><p className="text-sm text-gray-500">使用者帳號</p><p className="text-xl font-bold">{customAccount.username}</p></div>
+                    </div>
+                    {customAccount.isAuto && <p className="text-xs text-orange-500 mb-4 font-bold border border-orange-200 bg-orange-50 p-2 rounded">系統為您自動生成的防丟帳號。若要跨裝置請設專屬帳密。</p>}
+                    <button onClick={handleLogout} className="w-full flex items-center justify-center p-3 bg-red-50 text-red-600 rounded-xl font-bold hover:bg-red-100 active:scale-95"><LogOut className="w-5 h-5 mr-2" /> {customAccount.isAuto ? '重新設定帳密' : '登出此帳號'}</button>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="flex items-center mb-2">🛡️ <h3 className="font-bold text-gray-800 text-lg ml-2">登入或建立帳號</h3></div>
+                    <p className="text-xs text-gray-500 mb-5 leading-relaxed">自訂一組帳密，系統會為您建立專屬雲端。<strong>螢幕重整不流失資料！</strong></p>
+                    <div className="space-y-4">
+                      <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl p-2 focus-within:ring-2 focus-within:ring-blue-500"><User className="w-5 h-5 text-gray-400 ml-2" /><input type="text" value={usernameInput} onChange={e => setUsernameInput(e.target.value)} placeholder="輸入自訂帳號" className="flex-1 bg-transparent outline-none p-2 text-gray-700 font-medium" /></div>
+                      <div className="flex items-center bg-gray-50 border border-gray-200 rounded-xl p-2 focus-within:ring-2 focus-within:ring-blue-500"><Lock className="w-5 h-5 text-gray-400 ml-2" /><input type="password" value={passwordInput} onChange={e => setPasswordInput(e.target.value)} placeholder="輸入密碼" className="flex-1 bg-transparent outline-none p-2 text-gray-700 font-medium" /></div>
+                      <button onClick={handleLoginOrRegister} disabled={isAuthLoading} className="w-full flex items-center justify-center p-4 bg-blue-600 text-white rounded-xl font-bold shadow-md hover:bg-blue-700 disabled:opacity-50 active:scale-95">{isAuthLoading ? <Loader2 className="w-5 h-5 animate-spin mr-2" /> : <Key className="w-5 h-5 mr-2" />} 登入 / 註冊</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-200 relative overflow-hidden mb-6">
+                <div className="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
+                <div className="flex items-center mb-3"><Database className="w-5 h-5 mr-2 text-gray-600" /><h3 className="font-bold text-gray-800 text-base">進階文字備份</h3></div>
+                <div className="space-y-3">
+                  <button onClick={handleGenerateExportText} className="w-full flex items-center justify-center p-3 bg-gray-100 text-gray-700 rounded-xl font-medium hover:bg-gray-200"><Copy className="w-4 h-4 mr-2" /> 匯出資料 (複製代碼)</button>
+                  {showExportArea && (<div className="bg-gray-50 p-3 rounded-xl border border-gray-200 animate-in fade-in"><textarea readOnly value={exportText} className="w-full h-24 p-2 text-[10px] text-gray-400 bg-white border border-gray-200 rounded font-mono outline-none mb-2" /><button onClick={copyToClipboard} className="w-full py-2 bg-blue-500 text-white rounded-lg text-sm font-bold hover:bg-blue-600">點擊複製</button></div>)}
+                  <button onClick={() => { setShowImportArea(!showImportArea); setShowExportArea(false); }} className="w-full flex items-center justify-center p-3 bg-white border border-gray-300 text-gray-600 rounded-xl font-medium hover:bg-gray-50"><Clipboard className="w-4 h-4 mr-2" /> 匯入資料 (貼上代碼)</button>
+                  {showImportArea && (<div className="bg-gray-50 p-3 rounded-xl border border-gray-200 animate-in fade-in"><textarea value={importText} onChange={e => setImportText(e.target.value)} placeholder="貼上 SYNC_ 開頭的代碼..." className="w-full h-24 p-2 text-xs text-gray-800 bg-white border border-gray-300 rounded font-mono outline-none mb-2 focus:ring-1 focus:ring-blue-500" /><button onClick={handleRestoreFromText} disabled={!importText || isSaving} className="w-full flex items-center justify-center py-2 bg-green-500 text-white rounded-lg text-sm font-bold hover:bg-green-600 disabled:opacity-50">{isSaving ? <Loader2 className="w-4 h-4 animate-spin" /> : '確認還原資料'}</button></div>)}
+                </div>
+              </div>
+            </div>
+          );
+        }
+      
+        return null;
+      };
+
+      return (
+        <div className="min-h-[100dvh] bg-gray-50 font-sans text-gray-900 max-w-md mx-auto relative shadow-2xl overflow-hidden flex flex-col">
+          {!['study', 'reviewGen'].includes(currentView) && (
+            <header className="bg-white px-5 py-4 shadow-sm z-10 sticky top-0 border-b border-gray-100 flex justify-between items-center">
+              <h1 className="text-xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600 flex items-center"><Zap className="w-5 h-5 mr-2 text-blue-500 fill-blue-500" /> AI 字卡</h1>
+              <div className={`flex items-center px-3 py-1 rounded-full text-[10px] font-bold shadow-sm cursor-pointer border ${customAccount && !customAccount.isAuto ? 'bg-blue-50 text-blue-600 border-blue-200' : 'bg-gray-100 text-gray-500 border-gray-200'}`} onClick={() => setCurrentView('settings')}>{customAccount && !customAccount.isAuto ? <><User className="w-3 h-3 mr-1" /> {customAccount.username}</> : <><User className="w-3 h-3 mr-1" /> 訪客</>}</div>
+            </header>
+          )}
+
+          <main className="flex-1 overflow-y-auto relative scrollbar-hide">{renderMainContent()}</main>
+
+          {gachaPhase !== 'idle' && (
+            <div className="fixed inset-0 bg-black/80 z-[250] flex items-center justify-center p-4">
+               <div className="w-full max-w-sm rounded-3xl p-6 relative flex flex-col items-center justify-center min-h-[300px]">
+                  {gachaPhase === 'capsule' && (<div className="animate-gacha-shake cursor-pointer" onClick={handleOpenCapsule}><div className="text-9xl filter drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">🥚</div><p className="text-white text-center mt-4 font-bold animate-pulse">點擊開啟</p></div>)}
+                  {gachaPhase === 'opening' && (<div className="relative flex justify-center items-center"><div className="absolute w-32 h-32 bg-white rounded-full blur-2xl animate-gacha-light"></div><div className="text-9xl animate-spin">✨</div></div>)}
+                  {gachaPhase === 'result' && gachaRewardData && (
+                     <div className="bg-white p-8 rounded-3xl text-center w-full shadow-2xl animate-in zoom-in-50 duration-500 relative overflow-hidden"><div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-yellow-100 to-transparent opacity-50"></div><h3 className="text-2xl font-black text-indigo-900 mb-4 relative z-10">恭喜獲得！</h3><div className="text-6xl mb-4 relative z-10 drop-shadow-md">{gachaRewardData.type === 'xp' ? '🍖' : <img src={PET_FAMILIES[gachaRewardData.value]?.stages[0]?.img} className="w-24 h-24 mx-auto object-contain pixelated" alt="p"/>}</div><p className="text-lg font-bold text-gray-800 relative z-10">{gachaRewardData.type === 'xp' ? `${gachaRewardData.value} XP` : `新夥伴：${PET_FAMILIES[gachaRewardData.value]?.name}`}</p><button onClick={() => setGachaPhase('idle')} className="mt-8 w-full py-3 bg-indigo-600 text-white rounded-xl font-bold active:scale-95 shadow-lg relative z-10">收下獎勵</button></div>
+                  )}
+               </div>
+            </div>
+          )}
+
+          {showRouletteModal && (
+            <div className="fixed inset-0 bg-black/70 z-[200] flex items-center justify-center p-4 animate-in fade-in">
+              <div className={`w-full max-w-sm rounded-3xl p-6 relative shadow-2xl text-center overflow-hidden border-4 ${isSuperRoulette ? 'border-yellow-400 bg-gradient-to-b from-yellow-50 to-yellow-100' : 'border-indigo-100 bg-white'}`}>
+                 {!isSpinning && !rouletteResult && <button onClick={() => setShowRouletteModal(false)} className="absolute top-4 right-4 p-2 bg-gray-200 rounded-full z-50"><X className="w-5 h-5" /></button>}
+                 <h2 className={`text-2xl font-black mb-1 ${isSuperRoulette ? 'text-yellow-600' : 'text-indigo-900'}`}>{isSuperRoulette ? '🌟 黃金轉盤' : '🎡 幸運轉盤'}</h2>
+                 <div className="relative w-64 h-64 mx-auto mb-8 my-4 select-none">
+                    <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 z-50 text-5xl drop-shadow-lg pb-2">👇</div>
+                    <div className="absolute inset-0 m-auto w-full h-full rounded-full border-8 border-white shadow-inner overflow-hidden" style={{ transform: `rotate(${rotation}deg)`, transition: isSpinning ? 'transform 4.5s cubic-bezier(0.1, 0.7, 0.1, 1)' : 'none', background: `conic-gradient(${activeSlices.map((s, i) => `${s.displayColor} ${i * (360/activeSlices.length)}deg ${(i + 1) * (360/activeSlices.length)}deg`).join(', ')})` }}>
+                       {activeSlices.map((sl, i) => (<div key={i} className="absolute w-full h-full pointer-events-none flex flex-col items-center" style={{ transform: `rotate(${(i + 0.5) * (360 / activeSlices.length)}deg)` }}><div className="mt-5 flex flex-col items-center"><span className="text-2xl">{sl.icon}</span><span className="text-[10px] font-black mt-1 bg-white/40 px-1.5 py-0.5 rounded">{sl.label}</span></div></div>))}
+                    </div>
+                    <div className="absolute inset-0 m-auto w-12 h-12 bg-white rounded-full border-4 border-gray-200 flex items-center justify-center z-10"><div className={`w-5 h-5 rounded-full animate-pulse ${isSuperRoulette ? 'bg-yellow-400' : 'bg-indigo-500'}`}></div></div>
+                 </div>
+                 <div className="relative z-50">
+                   {rouletteResult ? (<div className="animate-in fade-in slide-in-from-bottom-4"><div className="text-4xl mb-2 animate-bounce">{rouletteResult.icon}</div><div className={`text-xl font-black mb-4 ${isSuperRoulette ? 'text-yellow-700' : 'text-indigo-700'}`}>獲得 {rouletteResult.label}！</div><button onClick={claimRouletteReward} className={`w-full py-4 text-white rounded-xl font-black shadow-lg active:scale-95 text-lg ${isSuperRoulette ? 'bg-gradient-to-r from-yellow-500 to-orange-500' : 'bg-gradient-to-r from-blue-500 to-indigo-600'}`}>收下！</button></div>) : (<button onClick={spinRoulette} disabled={isSpinning} className={`w-full py-4 text-white rounded-xl font-black shadow-lg text-xl active:scale-95 ${isSpinning ? 'bg-gray-400' : (isSuperRoulette ? 'bg-gradient-to-r from-yellow-400 to-orange-500' : 'bg-gradient-to-r from-indigo-500 to-purple-600')}`}>{isSpinning ? '轉動中...' : '🎯 抽獎'}</button>)}
+                 </div>
+              </div>
+            </div>
+          )}
+
+          {showMixModal && (
+             <div className="fixed inset-0 bg-black/60 z-[100] flex items-end sm:items-center justify-center p-4 animate-in fade-in">
+               <div className="bg-white w-full max-w-sm rounded-3xl p-6 relative animate-in slide-in-from-bottom-8 max-h-[80vh] flex flex-col">
+                 <button onClick={() => setShowMixModal(false)} className="absolute top-4 right-4 p-2 bg-gray-100 rounded-full"><X className="w-5 h-5" /></button>
+                 <h2 className="text-xl font-bold mb-4 flex items-center"><Shuffle className="w-5 h-5 mr-2 text-indigo-600"/> 綜合測驗</h2>
+                 <div className="bg-indigo-50 p-3 rounded-xl mb-4 border flex justify-center space-x-4"><label className="flex items-center space-x-1 cursor-pointer"><input type="checkbox" checked={filterKeypoint} onChange={e => setFilterKeypoint(e.target.checked)} className="rounded text-indigo-600" /><span className="text-xs font-bold">重點卡</span></label><label className="flex items-center space-x-1 cursor-pointer"><input type="checkbox" checked={filterEnglish} onChange={e => setFilterEnglish(e.target.checked)} className="rounded text-green-600" /><span className="text-xs font-bold">英文卡</span></label></div>
+                 <div className="flex-1 overflow-y-auto space-y-4 pr-2 border-t pt-4">
+                   {Object.keys((cards || []).reduce((a, c) => { const s=c.subject||'未分'; const ch=c.chapter||'未分'; if(!a[s])a[s]=new Set(); a[s].add(ch); return a; }, {})).map(sub => {
+                     const subC = Array.from((cards || []).reduce((a, c) => { const s=c.subject||'未分'; const ch=c.chapter||'未分'; if(!a[s])a[s]=new Set(); a[s].add(ch); return a; }, {})[sub]);
+                     return (<div key={sub} className="bg-gray-50 rounded-xl p-3 border"><div className="font-bold text-sm text-indigo-600 mb-2">{sub}</div>{subC.map(ch => { const id = `${sub}::${ch}`; const isC = selectedMixChapters.includes(id); return (<label key={ch} className="flex items-center space-x-3 p-2 hover:bg-gray-100 rounded-lg cursor-pointer"><input type="checkbox" checked={isC} onChange={() => toggleMixChapter(id)} className="w-4 h-4 text-indigo-600 rounded" /><span className="text-sm font-medium">{ch}</span></label>);})}</div>)
+                   })}
+                 </div>
+                 <div className="mt-4 pt-4 border-t space-y-2"><div className="flex space-x-2"><button onClick={() => startMixedReview('srs')} disabled={selectedMixChapters.length===0} className="flex-1 py-3 bg-indigo-600 text-white rounded-xl font-bold disabled:opacity-50 text-xs">排程</button><button onClick={() => startMixedReview('cram')} disabled={selectedMixChapters.length===0} className="flex-1 py-3 bg-yellow-500 text-white rounded-xl font-bold disabled:opacity-50 text-xs">衝刺</button></div><button onClick={() => startMixedReview('list')} disabled={selectedMixChapters.length===0} className="w-full py-3 bg-white text-indigo-600 border rounded-xl font-bold disabled:opacity-50 text-xs">速讀</button></div>
+               </div>
+             </div>
+          )}
+
+          {showChestModal && (
+            <div className="fixed inset-0 bg-black/80 z-[250] flex items-center justify-center p-4 animate-in fade-in">
+               <div className="bg-white w-full max-w-sm rounded-3xl p-8 relative flex flex-col items-center justify-center shadow-2xl border-4 border-yellow-300">
+                  <h3 className="text-2xl font-black text-yellow-600 mb-6 flex items-center"><Sparkles className="w-6 h-6 mr-2"/> 寶箱！</h3>
+                  <div className="text-6xl mb-6 animate-bounce">🎁</div><p className="text-lg font-bold text-center">{chestReward}</p>
+                  <button onClick={() => { setShowChestModal(false); setChestReward(null); }} className="mt-8 w-full py-4 bg-gradient-to-r from-yellow-500 to-orange-500 text-white rounded-xl font-black active:scale-95 text-lg">太棒了！</button>
+               </div>
+            </div>
+          )}
+
+          {['today', 'folders', 'chapters', 'cardList', 'upload', 'settings', 'pokedex'].includes(currentView) && (
+            <nav className="bg-white border-t border-gray-200 fixed bottom-0 w-full max-w-md pb-safe z-40">
+              <div className="flex justify-around items-center p-2 relative">
+                <button onClick={() => setCurrentView('today')} className={`flex flex-col items-center p-2 w-14 ${['today'].includes(currentView) ? 'text-blue-600' : 'text-gray-400'}`}><div className="relative"><Calendar className={`w-6 h-6 mb-1 ${['today'].includes(currentView) ? 'fill-blue-100' : ''}`} />{dueCards.length > 0 && <span className="absolute -top-1 -right-2 bg-red-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full border-2 border-white shadow-sm">{dueCards.length}</span>}</div><span className="text-[10px] font-bold">首頁</span></button>
+                <button onClick={() => setCurrentView('folders')} className={`flex flex-col items-center p-2 w-14 ${['folders', 'chapters', 'cardList'].includes(currentView) ? 'text-blue-600' : 'text-gray-400'}`}><Folder className={`w-6 h-6 mb-1 ${['folders', 'chapters', 'cardList'].includes(currentView) ? 'fill-blue-100' : ''}`} /><span className="text-[10px] font-bold">牌組</span></button>
+                <div className="relative -top-5"><button onClick={() => { setUploadSubject(activeSubject||''); setUploadChapter(activeChapter||''); setCurrentView('upload'); }} className="flex items-center justify-center w-14 h-14 bg-gradient-to-tr from-blue-600 to-indigo-500 text-white rounded-full shadow-xl active:scale-95 border-4 border-gray-50"><Plus className="w-7 h-7 stroke-[3]" /></button></div>
+                <button onClick={() => setCurrentView('pokedex')} className={`flex flex-col items-center p-2 w-14 ${currentView === 'pokedex' ? 'text-blue-600' : 'text-gray-400'}`}><div className="relative"><span className={`text-xl mb-1 block ${currentView === 'pokedex' ? 'grayscale-0' : 'grayscale opacity-50'}`}>🎟️</span>{(stats.gachaTokens || 0) > 0 && <span className="absolute -top-1 -right-1 bg-pink-500 w-3 h-3 rounded-full border-2 border-white animate-pulse"></span>}</div><span className="text-[10px] font-bold">扭蛋</span></button>
+                <button onClick={() => setCurrentView('settings')} className={`flex flex-col items-center p-2 w-14 ${currentView === 'settings' ? 'text-blue-600' : 'text-gray-400'}`}><Settings className={`w-6 h-6 mb-1 ${currentView === 'settings' ? 'fill-blue-100' : ''}`} /><span className="text-[10px] font-bold">設定</span></button>
+              </div>
+            </nav>
+          )}
+          {(['study', 'today'].includes(currentView)) && (stats.activePets || []).filter(k => PET_FAMILIES[k]).map((pK, i) => (<DraggablePet key={pK+'-'+i} petKey={pK} petInfo={getPetStatus(pK, (stats.petXp || {})[pK] || 0)} currentView={currentView} initialOffset={i * 110} />))}
+          {toast && (<div className="fixed top-20 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-xl z-[150] text-sm font-medium animate-in fade-in flex items-center whitespace-nowrap"><Check className="w-4 h-4 mr-2 text-green-400" /> {toast}</div>)}
+        </div>
+      );
+    }
+    
+    const root = createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
