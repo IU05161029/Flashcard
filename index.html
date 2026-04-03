@@ -140,9 +140,10 @@
     import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
     import { getFirestore, collection, doc, setDoc, deleteDoc, updateDoc, onSnapshot, getDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
-    // 【重要】請將你的 Gemini API Key 填入下方引號內
-    const apiKey = ""; 
+    // ✨ 這次真的有放進去了！你的 Gemini 大腦鑰匙：
+    const apiKey = "AIzaSyATaUP8AcuhjlNyriRgPYrRfCrsaCqqQkU"; 
 
+    // 🔥 你專屬的 Firebase 資料庫鑰匙：
     const fbCfg = {
       apiKey: "AIzaSyB9R8B_N-Y96vcNtkIdCUsqSK5rcCcMFsQ",
       authDomain: "flash-card-8bf5c.firebaseapp.com",
@@ -597,7 +598,7 @@
             if (currentPets.length === 1) return showToast("至少要保留一隻伴讀精靈喔！");
             const newPets = currentPets.filter(k => k !== petKey); await updateStatsData({ activePets: newPets }); showToast(`已收回！`);
         } else {
-            if (currentPets.length >= 3) return showToast("最多同時召喚 3 隻喔！");
+            if (currentPets.length >= 3) return showToast("最多只能同時召喚 3 隻喔！");
             const newPets = [...currentPets, petKey]; await updateStatsData({ activePets: newPets }); showToast(`成功召喚！`);
         }
       };
@@ -930,7 +931,7 @@
                   ) : (
                     <>
                        <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('left', 1); }} className="flex-1 max-w-[150px] py-4 rounded-2xl bg-red-500 text-white font-black shadow-lg shadow-red-500/30 active:scale-95 text-base sm:text-lg flex items-center justify-center"><X className="w-5 h-5 mr-1"/> 忘記</button>
-                       <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('right', 3); }} className="flex-1 max-w-[150px] py-4 rounded-2xl bg-green-500 text-white font-black shadow-lg shadow-red-500/30 active:scale-95 text-base sm:text-lg flex items-center justify-center"><Check className="w-5 h-5 mr-1"/> 記得</button>
+                       <button onPointerDown={e=>e.stopPropagation()} onClick={(e) => { e.stopPropagation(); triggerSwipeAnimation('right', 3); }} className="flex-1 max-w-[150px] py-4 rounded-2xl bg-green-500 text-white font-black shadow-lg shadow-green-500/30 active:scale-95 text-base sm:text-lg flex items-center justify-center"><Check className="w-5 h-5 mr-1"/> 記得</button>
                     </>
                   )
                 ) : (
@@ -1056,7 +1057,7 @@
                 </div>
 
                 <div className="space-y-3">
-                   <button onClick={() => startStudySession(dueCards, 'srs')} disabled={dueCards.length === 0 || isDataLoading} className="w-full py-4 bg-white text-indigo-600 rounded-xl font-black text-lg shadow-xl active:scale-95 disabled:opacity-50 transition-all transform hover:-translate-y-1 flex items-center justify-center">
+                   <button onClick={() => startStudySession(dueCards, 'srs')} disabled={dueCards.length === 0 || isDataLoading} className="w-full py-4 bg-white text-indigo-600 rounded-xl font-bold text-lg shadow-xl active:scale-95 disabled:opacity-50 transition-all transform hover:-translate-y-1 flex items-center justify-center">
                      {dueCards.length > 0 ? '🚀 記憶排程 (獲取口糧)' : '今日已餵飽 🎉'}
                    </button>
                    {dueCards.length > 0 && (
