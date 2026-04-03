@@ -140,12 +140,19 @@
     import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
     import { getFirestore, collection, doc, setDoc, deleteDoc, updateDoc, onSnapshot, getDoc, writeBatch } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
+    // 這裡請填入你的 Gemini API Key
     const apiKey = ""; 
     
-    // --- 這次修復的重點在這裡 ---
-    // 加入了假的 apiKey 與 appId，避免 Firebase 在 GitHub Pages 上初始化崩潰
-    let fbCfg = { apiKey: 'dummy-api-key', projectId: 'dummy-project-id', appId: '1:123456789:web:abcdef' };
-    try { if (typeof __firebase_config !== 'undefined' && __firebase_config) fbCfg = JSON.parse(__firebase_config); } catch(e) {}
+    // --- 已更新為你提供的真的鑰匙 ---
+    const fbCfg = {
+      apiKey: "AIzaSyB9R8B_N-Y96vcNtkIdCUsqSK5rcCcMFsQ",
+      authDomain: "flash-card-8bf5c.firebaseapp.com",
+      projectId: "flash-card-8bf5c",
+      storageBucket: "flash-card-8bf5c.firebasestorage.app",
+      messagingSenderId: "237699713876",
+      appId: "1:237699713876:web:8d8803bc0f564cd3a796c1",
+      measurementId: "G-MCYTRQ8ZNM"
+    };
     
     const app = !getApps().length ? initializeApp(fbCfg) : getApp();
     const auth = getAuth(app);
@@ -579,7 +586,7 @@
             if(Math.random() < 0.5) { updates = { luckyClover: (stats.luckyClover || 0) + 20 }; rewardText = `獲得 🍀 幸運四葉草`; }
             else { updates = { comboBattery: (stats.comboBattery || 0) + 1 }; rewardText = `獲得 ⚡ 連擊電池`; }
         } 
-        else if (roll < 0.98) { updates = { feverCharm: (stats.feverCharm || 0) + 15 }; rewardText = `歐皇附體！獲得 🔥 狂熱符咒`; }
+        else if (roll < 0.98) { updates = { feverCharm: (stats.feverCharm || 0) + 15 }; rewardText = `歐皇體！獲得 🔥 狂熱符咒`; }
         else if (roll < 0.995) { updates = { gachaTokens: (stats.gachaTokens || 0) + 1 }; rewardText = `神話掉落！獲得 🎟️ 扭蛋券 x1`; }
         else { updates = { gachaTokens: (stats.gachaTokens || 0) + 3 }; rewardText = `💎 究極大獎！獲得 🎟️ 扭蛋券 x3！`; }
         await updateStatsData(updates); setShowChestModal(true); setChestReward(rewardText);
